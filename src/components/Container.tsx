@@ -1,0 +1,19 @@
+import type { ReactNode } from "react";
+
+type ContainerProps = {
+  children: ReactNode;
+  className?: string;
+};
+
+export default function Container({
+  children,
+  className = "",
+}: ContainerProps) {
+  return (
+    <div
+      className={`mx-auto w-full max-w-7xl px-4 xxs:px-5 xs:px-6 sm:px-8 lg:px-10 ${className}`.trim()}
+    >
+      {children}
+    </div>
+  );
+}
