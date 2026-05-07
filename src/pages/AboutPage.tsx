@@ -30,7 +30,7 @@ export default function AboutPage() {
             <h1 className="max-w-2xl text-4xl leading-tight font-semibold text-secondary-100 xxs:text-5xl md:text-6xl">
               Built to deliver clean, confident print for modern brands.
             </h1>
-            <p className="max-w-xl text-sm leading-7 text-secondary-300 sm:text-base">
+            <p className="max-w-xl text-sm leading-7 text-secondary-100 sm:text-base">
               Pallotti Press supports businesses, events, and creators with
               professional printing services that balance visual quality, fast
               turnaround, and dependable production.
@@ -76,12 +76,12 @@ export default function AboutPage() {
           {values.map((value) => (
             <article
               key={value.title}
-              className="rounded-4xl bg-style-600/70 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
+              className="rounded-4xl  border border-secondary-100/15 bg-style-600/70 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
             >
-              <h3 className="text-2xl font-semibold text-secondary-100">
+              <h3 className="text-3xl font-semibold text-secondary-100">
                 {value.title}
               </h3>
-              <p className="mt-4 text-sm leading-7 text-secondary-300">
+              <p className="mt-4 text-lg leading-7 text-secondary-100">
                 {value.description}
               </p>
             </article>
@@ -91,7 +91,7 @@ export default function AboutPage() {
 
       <PageSection className="bg-primary-800">
         <div className="rounded-[2.25rem] bg-primary-700/70 p-8 text-center sm:p-12">
-          <p className="text-sm tracking-[0.18em] text-custom-300 uppercase">
+          <p className="text-lg tracking-[0.18em] text-custom-100 uppercase font-bold">
             Start Your Next Print Project
           </p>
           <h2 className="mt-4 text-3xl font-semibold text-secondary-200 sm:text-4xl">

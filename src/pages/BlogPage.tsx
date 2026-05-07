@@ -74,7 +74,7 @@ export default function BlogPage() {
             <h1 className="text-4xl leading-tight font-semibold text-primary-100 xxs:text-5xl md:text-6xl">
               Print Insights & Tips
             </h1>
-            <p className="text-sm leading-7 text-primary-100 sm:text-base">
+            <p className="text-xl leading-7 text-primary-100">
               Expert advice, industry trends, and practical tips to help you make the most of your printing projects.
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function BlogPage() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-6 py-2 text-sm font-semibold tracking-[0.12em] uppercase transition border border-secondary-300/30 hover:bg-primary-700 hover:text-secondary-200 text-secondary-100 bg-secondary-200"
+                className="px-6 py-2 rounded text-sm font-semibold tracking-[0.12em] uppercase transition border border-secondary-300/30 hover:bg-primary-700 hover:text-secondary-200 text-secondary-100 bg-secondary-200"
               >
                 {category}
               </button>
@@ -116,7 +116,7 @@ export default function BlogPage() {
           {blogPosts.map((post) => (
             <article
               key={post.title}
-              className="group overflow-hidden bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
+              className="group border border-gray-300 rounded  overflow-hidden bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
             >
               <div className="relative h-56 overflow-hidden">
                 <img
@@ -130,18 +130,18 @@ export default function BlogPage() {
               </div>
               <div className="p-6">
                 <div className="mb-3 flex items-center gap-3 text-xs text-secondary-300">
-                  <span>{post.date}</span>
+                  <span className="text-black">{post.date}</span>
                   <span>•</span>
-                  <span>{post.readTime}</span>
+                  <span className="text-gray-600">{post.readTime}</span>
                 </div>
                 <h3 className="mb-3 text-xl font-semibold leading-tight text-secondary-100 transition-colors group-hover:text-primary-700">
                   {post.title}
                 </h3>
-                <p className="mb-4 text-sm leading-7 text-secondary-300">
+                <p className="mb-4 text-sm leading-7 text-secondary-100">
                   {post.excerpt}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-secondary-300">By {post.author}</span>
+                  <span className="text-xs text-gray-800">By {post.author}</span>
                   <button className="text-sm font-semibold text-primary-700 transition hover:text-secondary-100">
                     Read More →
                   </button>
@@ -152,7 +152,7 @@ export default function BlogPage() {
         </div>
 
         <div className="flex justify-center pt-8">
-          <Button variant="ghost">
+          <Button variant="secondary" size="lg" className="rounded">
             Load More Articles
           </Button>
         </div>
@@ -164,7 +164,7 @@ export default function BlogPage() {
           <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">
             Subscribe to Our Newsletter
           </h2>
-          <p className="mt-4 text-base leading-7 text-secondary-300">
+          <p className="mt-4 text-base leading-7 text-secondary-100">
             Get the latest printing tips, industry insights, and special offers delivered to your inbox.
           </p>
           <form className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -173,7 +173,7 @@ export default function BlogPage() {
               placeholder="Enter your email"
               className="flex-1 max-w-md border border-secondary-300/30 bg-secondary-200 px-6 py-4 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
             />
-            <Button type="submit" variant="secondary">
+            <Button type="submit" variant="secondary" className="rounded">
               Subscribe
             </Button>
           </form>
@@ -193,7 +193,7 @@ export default function BlogPage() {
             <div className="mx-auto h-1 w-24 bg-secondary-100" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2  lg:grid-cols-4">
             {[
               { topic: "Design Tips", count: "24 articles" },
               { topic: "Printing Basics", count: "18 articles" },
@@ -202,7 +202,7 @@ export default function BlogPage() {
             ].map((item) => (
               <div
                 key={item.topic}
-                className="bg-style-600/50 p-6 text-center shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)]"
+                className="bg-style-600/50 p-6 border border-gray-400 rounded text-center shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)]"
               >
                 <h3 className="text-xl font-semibold text-secondary-100">{item.topic}</h3>
                 <p className="mt-2 text-sm text-secondary-300">{item.count}</p>

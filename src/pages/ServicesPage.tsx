@@ -65,7 +65,7 @@ export default function ServicesPage() {
               <h1 className="text-4xl leading-tight font-semibold text-secondary-100 xxs:text-5xl md:text-6xl">
                 Professional Printing Services for Every Need
               </h1>
-              <p className="text-sm leading-7 text-secondary-300 sm:text-base">
+              <p className="text-sm leading-7 text-secondary-100 sm:text-base">
                 From business cards to custom packaging, we deliver high-quality printing solutions with precision, care, and attention to detail.
               </p>
             </div>
@@ -94,7 +94,7 @@ export default function ServicesPage() {
               <img
                 src={Img4}
                 alt="Professional printing services"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover "
               />
             </div>
           </div>
@@ -114,27 +114,27 @@ export default function ServicesPage() {
           <div className="mx-auto h-1 w-24 bg-secondary-100" />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1  gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => (
             <div
               key={service.title}
-              className="group overflow-hidden bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
+              className="group overflow-hidden rounded border border-secondary-100/15 bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
             >
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full  object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-8">
                 <h3 className="mb-3 text-2xl font-semibold text-secondary-100">
                   {service.title}
                 </h3>
-                <p className="mb-3 text-base text-secondary-300">
+                <p className="mb-3 text-base text-secondary-100">
                   {service.description}
                 </p>
-                <p className="text-sm leading-7 text-secondary-300">
+                <p className="text-sm leading-7 text-secondary-100">
                   {service.details}
                 </p>
               </div>
@@ -146,40 +146,40 @@ export default function ServicesPage() {
       {/* Why Choose Us */}
       <PageSection
         className="bg-style-600/50"
-        containerClassName="grid gap-8 lg:grid-cols-3"
+        containerClassName="grid gap-8  lg:grid-cols-3"
       >
-        <div className="bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className="bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Quality Materials
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Premium paper stocks and vibrant inks.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             We use only the finest materials to ensure your prints look professional and last longer.
           </p>
         </div>
 
-        <div className="bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className="bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Fast Turnaround
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Quick production without compromising quality.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             Rush orders available with same-day and next-day delivery options for urgent projects.
           </p>
         </div>
 
-        <div className="bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className="bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Expert Support
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Dedicated team to guide your project.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             From consultation to delivery, our experienced team ensures your complete satisfaction.
           </p>
         </div>
@@ -195,7 +195,7 @@ export default function ServicesPage() {
               </h2>
               <div className="h-1 w-24 bg-secondary-100" />
             </div>
-            <p className="text-base leading-7 text-secondary-300">
+            <p className="text-base leading-7 text-secondary-100">
               We've streamlined our workflow to deliver exceptional results efficiently. Here's how we bring your printing projects to life.
             </p>
             <Button to="/#contact" size="lg" variant="secondary">
@@ -216,7 +216,7 @@ export default function ServicesPage() {
                   <h3 className="mb-2 text-xl font-semibold text-secondary-100">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-7 text-secondary-300">
+                  <p className="text-sm leading-7 text-secondary-100">
                     {item.description}
                   </p>
                 </div>
@@ -230,14 +230,14 @@ export default function ServicesPage() {
       <section className="bg-style-600/50 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 xxs:px-5 xs:px-6 sm:px-8 lg:px-10">
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="overflow-hidden border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
+            <div className="overflow-hidden rounded border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
               <img
                 src={Img3}
                 alt="Printing samples"
                 className="h-80 w-full object-cover"
               />
             </div>
-            <div className="overflow-hidden border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
+            <div className="overflow-hidden rounded border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
               <img
                 src={Img4}
                 alt="Quality results"

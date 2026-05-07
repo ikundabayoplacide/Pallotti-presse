@@ -58,7 +58,7 @@ export default function ContactPage() {
             <h1 className="text-4xl leading-tight font-semibold text-primary-100 xxs:text-5xl md:text-6xl">
               Get in Touch
             </h1>
-            <p className="text-sm leading-7 text-prrimary-100 sm:text-base">
+            <p className="text-xl leading-7 text-primary-100">
               Have a question or ready to start your printing project? We're here to help. Reach out and let's discuss how we can bring your vision to life.
             </p>
           </div>
@@ -71,7 +71,7 @@ export default function ContactPage() {
           {contactInfo.map((info) => (
             <div
               key={info.title}
-              className="bg-style-600/50 p-8 text-center shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
+              className="bg-style-600/50 rounded border border-gray-400 p-8 text-center shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
             >
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-700 text-secondary-200">
                 <info.icon size={28} />
@@ -81,12 +81,12 @@ export default function ContactPage() {
               </h3>
               <div className="mt-4 space-y-1">
                 {info.details.map((detail) => (
-                  <p key={detail} className="text-base text-secondary-300">
+                  <p key={detail} className="text-base text-secondary-100">
                     {detail}
                   </p>
                 ))}
               </div>
-              <p className="mt-3 text-sm text-secondary-300">
+              <p className="mt-3 text-sm text-gray-700">
                 {info.description}
               </p>
             </div>
@@ -104,12 +104,12 @@ export default function ContactPage() {
                 Send Us a Message
               </h2>
               <div className="h-1 w-24 bg-secondary-100" />
-              <p className="text-base leading-7 text-secondary-300">
+              <p className="text-base leading-7 text-secondary-100">
                 Fill out the form below and we'll get back to you as soon as possible.
               </p>
             </div>
 
-            <form className="space-y-6">
+            <form className="space-y-6 rounded border border-secondary-300/30 bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label
@@ -123,7 +123,7 @@ export default function ContactPage() {
                     id="firstName"
                     name="firstName"
                     required
-                    className="w-full border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                    className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                     placeholder="John"
                   />
                 </div>
@@ -139,7 +139,7 @@ export default function ContactPage() {
                     id="lastName"
                     name="lastName"
                     required
-                    className="w-full border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                    className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                     placeholder="Doe"
                   />
                 </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
                   id="email"
                   name="email"
                   required
-                  className="w-full border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                  className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                   placeholder="john.doe@example.com"
                 />
               </div>
@@ -173,7 +173,7 @@ export default function ContactPage() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  className="w-full border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                  className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                   placeholder="+250 788 313 617"
                 />
               </div>
@@ -211,12 +211,12 @@ export default function ContactPage() {
                   name="message"
                   required
                   rows={6}
-                  className="w-full border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                  className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
 
-              <Button type="submit" size="lg" variant="secondary" className="w-full sm:w-auto">
+              <Button type="submit" size="lg" variant="secondary" className="w-full rounded sm:w-auto">
                 Send Message
               </Button>
             </form>
@@ -248,15 +248,15 @@ export default function ContactPage() {
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-secondary-300">Monday - Friday</span>
+                  <span className="text-secondary-100">Monday - Friday</span>
                   <span className="font-semibold text-secondary-100">8:00 AM - 5:00 PM</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-secondary-300">Saturday</span>
+                  <span className="text-secondary-100">Saturday</span>
                   <span className="font-semibold text-secondary-100">9:00 AM - 2:00 PM</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-secondary-300">Sunday</span>
+                  <span className="text-secondary-100">Sunday</span>
                   <span className="font-semibold text-secondary-100">Closed</span>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function ContactPage() {
               <h3 className="mb-4 text-xl font-semibold">
                 Need Immediate Assistance?
               </h3>
-              <p className="mb-6 text-sm leading-7 text-secondary-400">
+              <p className="mb-6 text-lg leading-7 text-secondary-400">
                 For urgent inquiries or rush orders, please call us directly.
               </p>
               <div className="space-y-3">
@@ -279,7 +279,7 @@ export default function ContactPage() {
                 </a>
                 <a
                   href="mailto:info@pallottipresse.com"
-                  className="block text-sm text-secondary-400 hover:text-secondary-200"
+                  className="block text-lg text-secondary-400 hover:text-secondary-200"
                 >
                   info@pallottipresse.com
                 </a>
@@ -303,7 +303,7 @@ export default function ContactPage() {
             {faqs.map((faq, index) => (
               <div
                 key={faq.question}
-                className="overflow-hidden border border-secondary-300/20 bg-style-600/50 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)]"
+                className="overflow-hidden rounded border border-secondary-300/20 bg-style-600/50 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)]"
               >
                 <button
                   onClick={() => toggleFaq(index)}
@@ -325,7 +325,7 @@ export default function ContactPage() {
                     openFaq === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="px-6 pb-6 text-base leading-7 text-secondary-300">
+                  <p className="px-6 pb-6 text-base leading-7 text-secondary-100">
                     {faq.answer}
                   </p>
                 </div>

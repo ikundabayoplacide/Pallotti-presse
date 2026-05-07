@@ -17,20 +17,20 @@ export default function Footer() {
     >
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
         <div className="space-y-4">
-          <p className="text-xl font-semibold tracking-[0.18em] text-secondary-200 uppercase">
+          <p className="text-2xl font-semibold tracking-[0.18em] text-secondary-200 uppercase">
             Pallotti Press
           </p>
-          <p className="max-w-md text-sm leading-7">
+          <p className="max-w-md text-lg leading-7">
             Reusable publishing-focused UI, editorial storytelling, and
             responsive layouts built with a consistent visual language.
           </p>
         </div>
 
         <div className="space-y-4">
-          <p className="text-sm tracking-[0.18em] text-secondary-200 uppercase">
+          <p className="text-2xl tracking-[0.18em] text-secondary-200 uppercase">
             Services
           </p>
-          <ul className="space-y-3 text-sm">
+          <ul className="space-y-3 text-lg">
             {footerLinks.map((link) => (
               <li key={link}>{link}</li>
             ))}
@@ -38,10 +38,10 @@ export default function Footer() {
         </div>
 
         <div className="space-y-4">
-          <p className="text-sm tracking-[0.18em] text-secondary-200 uppercase">
+          <p className="text-2xl tracking-[0.18em] text-secondary-200 uppercase">
             Contact
           </p>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-3 text-lg">
             <p>info@pallottipresse.com</p>
             <p>+250788313617</p>
             <p>Kigali - Gikondo</p>

@@ -38,7 +38,7 @@ export default function LandingPage() {
               <h1 className="max-w-2xl text-4xl leading-tight font-semibold text-secondary-100 xxs:text-5xl md:text-6xl">
                 Bring Your Designs to Life with Our Professional Printing
               </h1>
-              <p className="max-w-xl text-sm leading-7 text-secondary-300 sm:text-base">
+              <p className="max-w-xl text-sm leading-7 text-secondary-100 sm:text-base">
                 We create premium boxes, business cards, paper bags, book
                 covers, and custom print materials with clean finishing, fast
                 turnaround, and a polished brand presentation.
@@ -106,40 +106,40 @@ export default function LandingPage() {
         className="bg-style-600/50"
         containerClassName="grid gap-8 lg:grid-cols-3"
       >
-        <div className=" bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className=" bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Fast Delivery
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Timely production for urgent print runs.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             From small branding jobs to larger promotional material batches, we
             keep schedules predictable and efficient.
           </p>
         </div>
 
-        <div className=" bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className=" bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Sharp Finishes
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Crisp color, durable stock, and professional detail.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             We focus on neat trimming, color consistency, and material choices
             that make printed products feel premium in hand.
           </p>
         </div>
 
-        <div className=" bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
-          <p className="text-sm tracking-[0.18em] text-secondary-300 uppercase">
+        <div className=" bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]">
+          <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
             Custom Orders
           </p>
           <h3 className="mt-4 text-2xl font-semibold text-secondary-100">
             Tailored solutions for brand, retail, and event printing.
           </h3>
-          <p className="mt-3 text-sm leading-7 text-secondary-300">
+          <p className="mt-3 text-sm leading-7 text-secondary-100">
             Whether you need packaging, cards, signage, or book covers, the
             layout is ready to showcase a real print-house catalog.
           </p>

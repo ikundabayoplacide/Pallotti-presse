@@ -57,7 +57,7 @@ export default function PortfolioPage() {
               <h1 className="text-4xl leading-tight font-semibold text-secondary-100 xxs:text-5xl md:text-6xl">
                 Our Portfolio
               </h1>
-              <p className="text-sm leading-7 text-secondary-300 sm:text-base">
+              <p className="text-lg leading-7 text-secondary-100 sm:text-base">
                 Explore our collection of successful printing projects. From business cards to custom packaging, see the quality and craftsmanship we deliver.
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function PortfolioPage() {
               <img
                 src={Img4}
                 alt="Portfolio showcase"
-                className="h-full w-full object-cover"
+                className="h-full w-full  object-cover"
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function PortfolioPage() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-6 py-2 text-sm font-semibold tracking-[0.12em] uppercase transition border border-secondary-300/30 hover:bg-primary-700 hover:text-secondary-200 text-secondary-100"
+                className="px-6 py-2 rounded text-sm font-semibold tracking-[0.12em] uppercase transition border border-secondary-300/30 hover:bg-primary-700 hover:text-secondary-200 text-secondary-100"
               >
                 {category}
               </button>
@@ -126,7 +126,7 @@ export default function PortfolioPage() {
           {portfolioItems.map((item) => (
             <div
               key={item.title}
-              className="group overflow-hidden bg-secondary-200 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
+              className="group rounded overflow-hidden bg-secondary-200 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
             >
               <div className="relative h-72 overflow-hidden">
                 <img
@@ -149,7 +149,7 @@ export default function PortfolioPage() {
                 <h3 className="mt-2 text-xl font-semibold text-secondary-100">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-secondary-300">
+                <p className="mt-3 text-sm leading-7 text-secondary-100">
                   {item.description}
                 </p>
               </div>
@@ -163,25 +163,25 @@ export default function PortfolioPage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="text-center">
             <div className="text-5xl font-bold text-primary-700">500+</div>
-            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-300">
+            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-100">
               Projects Completed
             </p>
           </div>
           <div className="text-center">
             <div className="text-5xl font-bold text-primary-700">300+</div>
-            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-300">
+            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-100">
               Happy Clients
             </p>
           </div>
           <div className="text-center">
             <div className="text-5xl font-bold text-primary-700">15+</div>
-            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-300">
+            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-100">
               Years Experience
             </p>
           </div>
           <div className="text-center">
             <div className="text-5xl font-bold text-primary-700">24h</div>
-            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-300">
+            <p className="mt-2 text-sm tracking-[0.14em] uppercase text-secondary-100">
               Fast Turnaround
             </p>
           </div>
@@ -198,7 +198,7 @@ export default function PortfolioPage() {
             <div className="mx-auto h-1 w-24 bg-secondary-100" />
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8  md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 name: "Sarah Johnson",
@@ -218,9 +218,9 @@ export default function PortfolioPage() {
             ].map((testimonial) => (
               <div
                 key={testimonial.name}
-                className="bg-secondary-200 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
+                className="bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
               >
-                <p className="text-base leading-7 text-secondary-300 italic">
+                <p className="text-base leading-7 text-secondary-100 italic">
                   "{testimonial.text}"
                 </p>
                 <div className="mt-6">

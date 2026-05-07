@@ -7,10 +7,10 @@ import Container from "./Container";
 
 const navItems = [
   { label: "Home", to: "/" },
-  { label: "Pages", to: "/about" },
+  { label: "About Us", to: "/about" },
   { label: "Services", to: "/services" },
-  { label: "Portfolio", to: "/portfolio" },
-  { label: "Blog", to: "/blog" },
+  { label: "Portfolios", to: "/portfolio" },
+  { label: "Posts", to: "/blog" },
   { label: "Contact Us", to: "/contact" },
 ];
 
@@ -20,8 +20,8 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-40 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
       <div className="bg-primary-800 text-secondary-200">
-        <Container className="hidden items-center justify-between gap-4 py-3 text-xs lg:flex">
-          <Link to="/" className="tracking-[0.04em] hover:underline">
+        <Container className="hidden items-center justify-between gap-4 py-3 text-lg lg:flex">
+          <Link to="/" className="tracking-[0.1em] hover:underline">
             Send your Quotes Now
           </Link>
 
@@ -99,7 +99,7 @@ export default function NavBar() {
               <NavLink
                 key={item.label}
                 to={item.to}
-                className="text-sm text-secondary-300 transition hover:text-secondary-100"
+                className="text-sm text-secondary-100 transition hover:text-secondary-100"
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
