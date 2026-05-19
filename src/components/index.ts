@@ -1,10 +1,16 @@
+export { default as AboutUsSection } from "./AboutUsSection";
 export { default as Button } from "./Button";
 export { default as Container } from "./Container";
+export { default as DashboardLayout } from "./DashboardLayout";
 export { default as FeatureCard } from "./FeatureCard";
 export { default as Footer } from "./Footer";
 export { default as Layout } from "./Layout";
 export { default as NavBar } from "./NavBar";
 export { default as PageSection } from "./PageSection";
+export { default as PartnersSection } from "./PartnersSection";
 export { default as ProductCard } from "./ProductCard";
+export { default as ScrollToTop } from "./ScrollToTop";
 export { default as SectionHeading } from "./SectionHeading";
 export { default as StatCard } from "./StatCard";
+export { default as WhatsappButton } from "./WhatsappButton";
+

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 type ButtonProps = {
   children: ReactNode;
   className?: string;
+  disabled?: boolean;
   href?: string;
   onClick?: () => void;
   size?: "sm" | "md" | "lg";
@@ -33,6 +34,7 @@ const baseClasses =
 export default function Button({
   children,
   className = "",
+  disabled = false,
   href,
   onClick,
   size = "md",
@@ -41,11 +43,13 @@ export default function Button({
   variant = "primary",
 }: ButtonProps) {
   const classes =
-    `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`.trim();
+    `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${
+      disabled ? "opacity-50 cursor-not-allowed" : ""
+    } ${className}`.trim();
 
   if (to) {
     return (
-      <Link className={classes} to={to}>
+      <Link className={classes} to={to} onClick={disabled ? (e) => e.preventDefault() : undefined}>
         {children}
       </Link>
     );
@@ -53,14 +57,14 @@ export default function Button({
 
   if (href) {
     return (
-      <a className={classes} href={href}>
+      <a className={classes} href={href} onClick={disabled ? (e) => e.preventDefault() : undefined}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={classes} onClick={onClick} type={type}>
+    <button className={classes} onClick={onClick} type={type} disabled={disabled}>
       {children}
     </button>
   );

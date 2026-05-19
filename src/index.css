@@ -1,11 +1,4 @@
-@font-face {
-  font-family: 'Comfortaa';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/comfortaa/v47/1PtCg8LJRfWJmhDAuUsSQamb1W0lwk4S4WjMXL830efAesmwYSFoxBEL_I2udQ.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -67,7 +60,7 @@ button,
 input,
 select,
 textarea {
-  font-family: 'Comfortaa', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html,
@@ -77,6 +70,45 @@ body,
   min-height: 100%;
   background: var(--color-primary-800);
   width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+@keyframes whatsapp-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+  }
+}
+
+@keyframes whatsapp-bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+.whatsapp-pulse {
+  animation: whatsapp-pulse 2s ease-in-out infinite;
+}
+
+.whatsapp-bounce:hover {
+  animation: whatsapp-bounce 0.6s ease;
 }
 
 @keyframes hero-slider {
@@ -101,12 +133,99 @@ body,
   }
 }
 
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes about-card-reveal {
+  0% {
+    opacity: 0;
+    transform: translateX(72px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .hero-slider {
   animation: hero-slider 20s ease-in-out infinite;
 }
 
+.scroll-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.scroll-content {
+  display: flex;
+  animation: scroll-left 30s linear infinite;
+  gap: 2rem;
+}
+
+.scroll-content:hover {
+  animation-play-state: paused;
+}
+
+.about-card-reveal {
+  opacity: 0;
+  transform: translateX(72px);
+}
+
+.about-card-reveal-visible {
+  animation: about-card-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.slide-in-item {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.slide-in-item-visible {
+  animation: slide-in-right 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-slider {
+    animation: none;
+  }
+
+  .scroll-content {
+    animation: none;
+  }
+
+  .about-card-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .about-card-reveal-visible {
+    animation: none;
+  }
+
+  .slide-in-item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .slide-in-item-visible {
     animation: none;
   }
 }
