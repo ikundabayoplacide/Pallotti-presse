@@ -60,7 +60,7 @@ export default function AdminServices() {
       featured: service.featured,
     });
     setImageFile(null);
-    setImagePreview(service.image);
+    setImagePreview(service.image ?? "");
     setIsModalOpen(true);
   };
 
