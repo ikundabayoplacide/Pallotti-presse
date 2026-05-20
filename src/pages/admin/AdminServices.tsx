@@ -55,7 +55,7 @@ export default function AdminServices() {
     setFormData({
       name: service.name,
       description: service.description,
-      price: service.price,
+      price: service.price ?? "",
       category: service.category,
       featured: service.featured,
     });
