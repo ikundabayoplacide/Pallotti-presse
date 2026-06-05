@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { aboutApi } from './api/about';
 import { authApi } from './api/auth';
 import { blogApi } from './api/blog';
 import { faqsApi } from './api/faqs';
+import { galleryApi } from './api/gallery';
 import { messagesApi } from './api/messages';
 import { partnersApi } from './api/partners';
 import { portfolioApi } from './api/portfolio';
+import { publicationsApi } from './api/publications';
 import { servicesApi } from './api/services';
 import { testimonialsApi } from './api/testimonials';
 import authReducer from './features/auth/authSlice';
@@ -13,6 +16,8 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+    [aboutApi.reducerPath]: aboutApi.reducer,
+    [galleryApi.reducerPath]: galleryApi.reducer,
     [servicesApi.reducerPath]: servicesApi.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     [blogApi.reducerPath]: blogApi.reducer,
@@ -20,10 +25,13 @@ export const store = configureStore({
     [partnersApi.reducerPath]: partnersApi.reducer,
     [testimonialsApi.reducerPath]: testimonialsApi.reducer,
     [faqsApi.reducerPath]: faqsApi.reducer,
+    [publicationsApi.reducerPath]: publicationsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
+      aboutApi.middleware,
+      galleryApi.middleware,
       servicesApi.middleware,
       portfolioApi.middleware,
       blogApi.middleware,
@@ -31,6 +39,7 @@ export const store = configureStore({
       partnersApi.middleware,
       testimonialsApi.middleware,
       faqsApi.middleware,
+      publicationsApi.middleware,
     ),
 });
 

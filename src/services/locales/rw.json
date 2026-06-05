@@ -1,0 +1,19 @@
+{
+  "nav": {
+    "home": "Ahabanza",
+    "about": "Abo Turibo",
+    "services": "Serivisi",
+    "portfolio": "Imirimo",
+    "blog": "Inkuru",
+    "gallery": "Amafoto",
+    "publications": "Ibitabo",
+    "contact": "Twandikire",
+    "quote": "Igiciro"
+  },
+  "language": {
+    "select": "Ururimi",
+    "en": "Icyongereza",
+    "fr": "Igifaransa",
+    "rw": "Kinyarwanda"
+  }
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiArrowRightOnRectangle, HiBars3, HiDocumentText, HiEnvelope, HiHome, HiQuestionMarkCircle, HiStar, HiUserGroup, HiXMark } from "react-icons/hi2";
+import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiDocumentText, HiEnvelope, HiHome, HiInformationCircle, HiLockClosed, HiOutlinePhoto, HiQuestionMarkCircle, HiStar, HiUserGroup, HiXMark } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../app/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -7,13 +7,17 @@ import Logo from "../assets/pplogo.png";
 
 const menuItems = [
   { icon: HiHome, label: "Dashboard", to: "/admin/dashboard" },
+  { icon: HiInformationCircle, label: "About", to: "/admin/about" },
   { icon: HiDocumentText, label: "Services", to: "/admin/services" },
   { icon: HiDocumentText, label: "Portfolio", to: "/admin/portfolio" },
   { icon: HiDocumentText, label: "Blog Posts", to: "/admin/blog" },
+  { icon: HiBookOpen, label: "Publications", to: "/admin/publications" },
+  { icon: HiOutlinePhoto, label: "Gallery", to: "/admin/gallery" },
   { icon: HiUserGroup, label: "Partners", to: "/admin/partners" },
   { icon: HiStar, label: "Testimonials", to: "/admin/testimonials" },
   { icon: HiQuestionMarkCircle, label: "FAQs", to: "/admin/faqs" },
   { icon: HiEnvelope, label: "Messages", to: "/admin/messages" },
+  { icon: HiLockClosed, label: "Change Password", to: "/admin/change-password" },
 ];
 
 export default function DashboardLayout() {
