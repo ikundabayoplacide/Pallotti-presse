@@ -1,53 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 import { HiCheckBadge, HiEye } from "react-icons/hi2";
+import { useGetAboutQuery } from "../app/api/about";
 import buildingImage from "../assets/im3.jpeg";
 
-const aboutHighlights = [
-  {
-    title: "Our vision",
-    description:
-      "To be the trusted print partner for brands, institutions, and growing businesses across Rwanda and the region.",
-    icon: HiEye,
-  },
-  {
-    title: "Our mission",
-    description:
-      "To deliver reliable printing, thoughtful design support, and timely production that helps every client present their work with confidence.",
-    icon: HiCheckBadge,
-  },
-];
-
 export default function AboutUsSection() {
+  const { data } = useGetAboutQuery();
+  const about = data?.data;
+
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const cardElement = cardRef.current;
-
-    if (!cardElement) {
-      return;
-    }
-
+    if (!cardElement) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
+      ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.25 },
     );
-
     observer.observe(cardElement);
-
     return () => observer.disconnect();
   }, []);
+
+  const highlights = [
+    {
+      title: "Our vision",
+      description: about?.vision ?? "To be the trusted print partner for brands, institutions, and growing businesses across Rwanda and the region.",
+      icon: HiEye,
+    },
+    {
+      title: "Our mission",
+      description: about?.mission ?? "To deliver reliable printing, thoughtful design support, and timely production that helps every client present their work with confidence.",
+      icon: HiCheckBadge,
+    },
+  ];
 
   return (
     <section className="relative overflow-hidden bg-slate-200 py-16 sm:py-20">
       <div className="absolute inset-0">
-        <img
-          src={buildingImage}
-          alt="Printing house building"
-          className="h-full w-full object-cover"
-        />
+        <img src={buildingImage} alt="Printing house building" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-sky-700/35 via-slate-900/20 to-slate-950/40" />
       </div>
 
@@ -61,33 +51,23 @@ export default function AboutUsSection() {
           >
             <div className="space-y-5">
               <div className="space-y-2">
-                <h2 className="text-xl font-bold text-secondary-100 sm:text-2xl">
-                  About Us
-                </h2>
+                <h2 className="text-xl font-bold text-secondary-100 sm:text-2xl">About Us</h2>
                 <p className="text-xs leading-relaxed text-secondary-300 sm:text-sm">
-                  We are a Printing Company located in Kigali, Rwanda, focused on high quality Print & Design Services for our clients all over country and in The Region. While continuously growing and expanding our network, we are always staying true to our values.
+                  {about?.aboutDescription ?? "We are a Printing Company located in Kigali, Rwanda, focused on high quality Print & Design Services for our clients all over country and in The Region."}
                 </p>
               </div>
 
               <div className="space-y-3">
-                {aboutHighlights.map((item) => {
+                {highlights.map((item) => {
                   const Icon = item.icon;
-
                   return (
-                    <div
-                      key={item.title}
-                      className="flex items-start gap-3"
-                    >
+                    <div key={item.title} className="flex items-start gap-3">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-500 sm:h-10 sm:w-10">
                         <Icon className="h-5 w-5" />
                       </div>
                       <div className="space-y-0.5">
-                        <h3 className="text-sm font-semibold text-secondary-100 sm:text-base">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs leading-relaxed text-secondary-300 sm:text-sm">
-                          {item.description}
-                        </p>
+                        <h3 className="text-sm font-semibold text-secondary-100 sm:text-base">{item.title}</h3>
+                        <p className="text-xs leading-relaxed text-secondary-300 sm:text-sm">{item.description}</p>
                       </div>
                     </div>
                   );

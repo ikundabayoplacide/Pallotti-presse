@@ -1,0 +1,19 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Articles",
+    "gallery": "Galerie",
+    "publications": "Publications",
+    "contact": "Contactez-Nous",
+    "quote": "Devis"
+  },
+  "language": {
+    "select": "Langue",
+    "en": "Anglais",
+    "fr": "Français",
+    "rw": "Kinyarwanda"
+  }
+}

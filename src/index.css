@@ -19,7 +19,7 @@
   --color-primary-300: oklch(80% 0.1 263.68);
   --color-primary-400: oklch(70% 0.156 263.68);
   --color-primary-500: oklch(60% 0.217 263.68);
-  --color-primary-600: oklch(50% 0.201 263.68);
+  --color-primary-600: oklch(0.68 0.179 220);
   --color-primary-700: oklch(40% 0.127 263.68);
   --color-primary-800: oklch(30% 0.059 263.68);
   --color-primary-900: oklch(20% 0.047 263.68);
@@ -228,4 +228,74 @@ body::-webkit-scrollbar-thumb {
   .slide-in-item-visible {
     animation: none;
   }
+}
+
+/* ── Google Translate cleanup ── */
+.goog-te-spinner-pos,
+.goog-te-spinner-animation,
+div[style*="background-color: rgb(255, 255, 255)"][style*="border"],
+div[style*="background-color: white"][style*="border"],
+div[style*="box-shadow"][style*="rgba"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body > div[style*="position: absolute"][style*="z-index"],
+body > div[style*="position: fixed"][style*="z-index"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+*[onmouseover*="goog"],
+*[onmouseout*="goog"] {
+  pointer-events: none !important;
+}
+
+body > .skiptranslate,
+.goog-te-gadget {
+  display: none !important;
+}
+
+.skiptranslate,
+.skiptranslate * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.goog-text-highlight,
+font[style*="background"],
+span[style*="background-color"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+font,
+.translated-ltr,
+.translated-rtl {
+  text-shadow: none !important;
+}
+
+/* Hide Google Translate top bar and iframe that increases page height */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Prevent the body top offset Google Translate adds */
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Hide the translate iframe injected into body */
+body > iframe[id^="goog"],
+body > iframe[src*="translate.google"] {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
 }

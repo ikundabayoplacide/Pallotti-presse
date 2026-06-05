@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="border-t border-secondary-300/20 bg-primary-900 text-secondary-400"
+      className="border-t border-secondary-300/20 bg-primary-600 text-secondary-200"
     >
       <Container className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
         <div className="space-y-4">
@@ -21,8 +21,8 @@ export default function Footer() {
             Pallotti Press
           </p>
           <p className="max-w-md text-lg leading-7">
-            Reusable publishing-focused UI, editorial storytelling, and
-            responsive layouts built with a consistent visual language.
+            Where creativity meets precision, that's where our printing and
+            publishing services thrive. Let us be the ink to your paper dreams.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default function Footer() {
           © {currentYear} Pallotti Press. All rights reserved || Powered by{" "}
           <a
             href="https://santechinnovate.com/"
-            className="hover:text-primary-500 text-primary-600"
+            className="hover:text-primary-700 text-primary-900 font-bold"
           >
             SAN TECH
           </a>
