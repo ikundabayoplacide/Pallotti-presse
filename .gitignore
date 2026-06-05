@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 prompt
 dist
+.env
 dist-ssr
 *.local
 
