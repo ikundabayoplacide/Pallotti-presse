@@ -71,7 +71,7 @@ export default function BlogPostPage() {
           />
 
           {/* Share Section */}
-          <div className="mt-12 border-t border-secondary-300/30 pt-8">
+          {/* <div className="mt-12 border-t border-secondary-300/30 pt-8">
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold text-secondary-100">Share this article:</span>
               <div className="flex gap-3">
@@ -85,7 +85,7 @@ export default function BlogPostPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Author Bio */}
           {post.author && (
