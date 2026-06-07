@@ -88,14 +88,14 @@ export default function BlogPostPage() {
           </div> */}
 
           {/* Author Bio */}
-          {post.author && (
+          {/* {post.author && (
             <div className="mt-12 rounded border border-secondary-300/30 bg-style-600/50 p-8">
               <h3 className="mb-2 text-xl font-semibold text-secondary-100">About {post.author.name}</h3>
               <p className="text-sm leading-7 text-secondary-100">
                 {post.author.name} is a printing and design expert helping businesses create impactful marketing materials.
               </p>
             </div>
-          )}
+          )} */}
         </div>
       </PageSection>
 
