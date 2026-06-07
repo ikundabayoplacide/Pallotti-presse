@@ -36,7 +36,7 @@ function RichEditor({
   editorRef,
 }: {
   initialContent: string;
-  editorRef: React.RefObject<HTMLDivElement>;
+  editorRef: React.RefObject<HTMLDivElement | null>;
 }) {
   // Populate content whenever initialContent changes (i.e. when edit opens)
   useEffect(() => {
