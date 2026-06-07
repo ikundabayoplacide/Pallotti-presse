@@ -115,7 +115,7 @@ export default function BlogPage() {
       </PageSection>
 
       {/* Newsletter Signup */}
-      <PageSection className="bg-style-600/50">
+      {/* <PageSection className="bg-style-600/50">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">Subscribe to Our Newsletter</h2>
           <p className="mt-4 text-base leading-7 text-secondary-100">
@@ -130,7 +130,7 @@ export default function BlogPage() {
             <Button type="submit" variant="secondary" className="rounded">Subscribe</Button>
           </form>
         </div>
-      </PageSection>
+      </PageSection> */}
 
       {/* CTA Section */}
       <PageSection className="bg-primary-800">
