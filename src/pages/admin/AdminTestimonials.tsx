@@ -33,10 +33,11 @@ const emptyForm: FormState = {
 
 export default function AdminTestimonials() {
   const { data, isLoading, isError } = useGetAllTestimonialsQuery();
-  const [createTestimonial] = useCreateTestimonialMutation();
-  const [updateTestimonial] = useUpdateTestimonialMutation();
-  const [approveTestimonial] = useApproveTestimonialMutation();
-  const [deleteTestimonial] = useDeleteTestimonialMutation();
+  const [createTestimonial, { isLoading: isSaving }] = useCreateTestimonialMutation();
+  const [updateTestimonial, { isLoading: isUpdating }] = useUpdateTestimonialMutation();
+  const [approveTestimonial, { isLoading: isApproving }] = useApproveTestimonialMutation();
+  const [deleteTestimonial, { isLoading: isDeleting }] = useDeleteTestimonialMutation();
+  const isMutating = isSaving || isUpdating;
 
   const testimonials = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -298,7 +299,8 @@ export default function AdminTestimonials() {
                         {!item.approved && (
                           <button
                             onClick={() => handleApprove(item.id)}
-                            className="inline-flex items-center gap-1 rounded border border-green-300 bg-green-50 px-3 py-2 text-xs font-semibold text-green-700 transition hover:bg-green-100"
+                            disabled={isApproving}
+                            className="inline-flex items-center gap-1 rounded border border-green-300 bg-green-50 px-3 py-2 text-xs font-semibold text-green-700 transition hover:bg-green-100 disabled:opacity-50"
                             title="Approve"
                           >
                             <HiCheckCircle className="h-4 w-4" />
@@ -312,7 +314,8 @@ export default function AdminTestimonials() {
                         </button>
                         <button
                           onClick={() => handleDelete(item.id)}
-                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                          disabled={isDeleting}
+                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
                         >
                           <HiTrash className="h-4 w-4" />
                         </button>
@@ -481,8 +484,8 @@ export default function AdminTestimonials() {
                   </div>
 
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">
-                      {editingItem ? "Update" : "Add Testimonial"}
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>
+                      {isMutating ? "Saving..." : editingItem ? "Update" : "Add Testimonial"}
                     </Button>
                     <Button
                       type="button"

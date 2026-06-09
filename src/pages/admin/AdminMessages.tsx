@@ -11,8 +11,8 @@ import { Button } from "../../components";
 
 export default function AdminMessages() {
   const { data, isLoading, isError } = useGetMessagesQuery();
-  const [markAsRead] = useMarkAsReadMutation();
-  const [deleteMessage] = useDeleteMessageMutation();
+  const [markAsRead, { isLoading: isMarking }] = useMarkAsReadMutation();
+  const [deleteMessage, { isLoading: isDeleting }] = useDeleteMessageMutation();
 
   const messages = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,13 +160,15 @@ export default function AdminMessages() {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => handleView(msg)}
-                          className="inline-flex items-center gap-1 rounded bg-primary-700 px-3 py-2 text-xs font-semibold text-secondary-200 transition hover:bg-primary-600"
+                          disabled={isMarking}
+                          className="inline-flex items-center gap-1 rounded bg-primary-700 px-3 py-2 text-xs font-semibold text-secondary-200 transition hover:bg-primary-600 disabled:opacity-50"
                         >
-                          <HiEye className="h-4 w-4" /> View
+                          <HiEye className="h-4 w-4" /> {isMarking ? "..." : "View"}
                         </button>
                         <button
                           onClick={() => handleDelete(msg.id)}
-                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                          disabled={isDeleting}
+                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
                         >
                           <HiTrash className="h-4 w-4" />
                         </button>

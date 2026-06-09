@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiDocumentText, HiEnvelope, HiHome, HiInformationCircle, HiLockClosed, HiOutlinePhoto, HiQuestionMarkCircle, HiStar, HiUserGroup, HiXMark } from "react-icons/hi2";
+import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiDocumentText, HiEnvelope, HiHome, HiInformationCircle, HiLockClosed, HiOutlinePhoto, HiPhoto, HiQuestionMarkCircle, HiStar, HiUserGroup, HiUsers, HiXMark } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../app/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -7,11 +7,13 @@ import Logo from "../assets/pplogo.png";
 
 const menuItems = [
   { icon: HiHome, label: "Dashboard", to: "/admin/dashboard" },
+  { icon: HiPhoto, label: "Hero Slides", to: "/admin/hero-slides" },
   { icon: HiInformationCircle, label: "About", to: "/admin/about" },
   { icon: HiDocumentText, label: "Services", to: "/admin/services" },
   { icon: HiDocumentText, label: "Portfolio", to: "/admin/portfolio" },
   { icon: HiDocumentText, label: "Blog Posts", to: "/admin/blog" },
   { icon: HiBookOpen, label: "Publications", to: "/admin/publications" },
+  { icon: HiLockClosed, label: "Pub. Access", to: "/admin/publication-access" },
   { icon: HiOutlinePhoto, label: "Gallery", to: "/admin/gallery" },
   { icon: HiUserGroup, label: "Partners", to: "/admin/partners" },
   { icon: HiStar, label: "Testimonials", to: "/admin/testimonials" },
@@ -27,6 +29,11 @@ export default function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  const visibleMenuItems = [
+    ...menuItems,
+    ...(user?.role === "super-admin" ? [{ icon: HiUsers, label: "Users", to: "/admin/users" }] : []),
+  ];
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
@@ -40,40 +47,28 @@ export default function DashboardLayout() {
           isCollapsed ? "lg:w-20" : "lg:w-64"
         }`}
       >
-        {/* Logo & Collapse Button */}
         <div className="flex h-16 items-center justify-between border-b border-secondary-300/20 px-4">
           {!isCollapsed && (
             <div className="flex items-center gap-3">
               <img src={Logo} alt="Logo" className="h-10 w-10 rounded-full" />
-              <span className="text-lg font-semibold text-secondary-200">
-                Admin Panel
-              </span>
+              <span className="text-lg font-semibold text-secondary-200">Admin Panel</span>
             </div>
           )}
-          {isCollapsed && (
-            <img src={Logo} alt="Logo" className="mx-auto h-10 w-10 rounded-full" />
-          )}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="text-secondary-400 transition hover:text-secondary-200"
-            title={isCollapsed ? "Expand" : "Collapse"}
-          >
+          {isCollapsed && <img src={Logo} alt="Logo" className="mx-auto h-10 w-10 rounded-full" />}
+          <button onClick={() => setIsCollapsed(!isCollapsed)} className="text-secondary-400 transition hover:text-secondary-200" title={isCollapsed ? "Expand" : "Collapse"}>
             <HiBars3 className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4">
           <ul className="space-y-2">
-            {menuItems.map((item) => (
+            {visibleMenuItems.map((item) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${
-                      isActive
-                        ? "bg-primary-600 text-secondary-200"
-                        : "text-secondary-400 hover:bg-primary-700 hover:text-secondary-200"
+                      isActive ? "bg-primary-600 text-secondary-200" : "text-secondary-400 hover:bg-primary-700 hover:text-secondary-200"
                     } ${isCollapsed ? "justify-center" : ""}`
                   }
                   title={isCollapsed ? item.label : undefined}
@@ -86,13 +81,8 @@ export default function DashboardLayout() {
           </ul>
         </nav>
 
-        {/* Logout */}
         <div className="border-t border-secondary-300/20 p-4">
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-secondary-400 transition hover:bg-primary-700 hover:text-secondary-200"
-            title={isCollapsed ? "Logout" : undefined}
-          >
+          <button onClick={handleLogout} className="flex w-full items-center justify-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-secondary-400 transition hover:bg-primary-700 hover:text-secondary-200" title={isCollapsed ? "Logout" : undefined}>
             <HiArrowRightOnRectangle className="h-5 w-5" />
             {!isCollapsed && <span>Logout</span>}
           </button>
@@ -101,10 +91,7 @@ export default function DashboardLayout() {
 
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-secondary-100/50 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
+        <div className="fixed inset-0 z-40 bg-secondary-100/50 lg:hidden" onClick={() => setIsSidebarOpen(false)} />
       )}
 
       {/* Sidebar - Mobile */}
@@ -113,35 +100,26 @@ export default function DashboardLayout() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Logo */}
         <div className="flex h-16 items-center justify-between border-b border-secondary-300/20 px-4">
           <div className="flex items-center gap-3">
             <img src={Logo} alt="Logo" className="h-10 w-10 rounded-full" />
-            <span className="text-lg font-semibold text-secondary-200">
-              Admin Panel
-            </span>
+            <span className="text-lg font-semibold text-secondary-200">Admin Panel</span>
           </div>
-          <button
-            onClick={() => setIsSidebarOpen(false)}
-            className="text-secondary-400 hover:text-secondary-200"
-          >
+          <button onClick={() => setIsSidebarOpen(false)} className="text-secondary-400 hover:text-secondary-200">
             <HiXMark className="h-6 w-6" />
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4">
           <ul className="space-y-2">
-            {menuItems.map((item) => (
+            {visibleMenuItems.map((item) => (
               <li key={item.to}>
                 <NavLink
                   to={item.to}
                   onClick={() => setIsSidebarOpen(false)}
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${
-                      isActive
-                        ? "bg-primary-600 text-secondary-200"
-                        : "text-secondary-400 hover:bg-primary-700 hover:text-secondary-200"
+                      isActive ? "bg-primary-600 text-secondary-200" : "text-secondary-400 hover:bg-primary-700 hover:text-secondary-200"
                     }`
                   }
                 >
@@ -153,12 +131,8 @@ export default function DashboardLayout() {
           </ul>
         </nav>
 
-        {/* Logout */}
         <div className="border-t border-secondary-300/20 p-4">
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-secondary-400 transition hover:bg-primary-700 hover:text-secondary-200"
-          >
+          <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-secondary-400 transition hover:bg-primary-700 hover:text-secondary-200">
             <HiArrowRightOnRectangle className="h-5 w-5" />
             <span>Logout</span>
           </button>
@@ -167,34 +141,19 @@ export default function DashboardLayout() {
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Header */}
         <header className="flex h-16 items-center justify-between border-b border-secondary-300/20 bg-secondary-200 px-4 shadow-sm lg:px-6">
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="text-secondary-100 lg:hidden"
-          >
+          <button onClick={() => setIsSidebarOpen(true)} className="text-secondary-100 lg:hidden">
             <HiBars3 className="h-6 w-6" />
           </button>
-
-          {/* Empty div for spacing on desktop when sidebar toggle is hidden */}
           <div className="hidden lg:block" />
-
           <div className="ml-auto flex items-center gap-4">
-            {user && (
-              <span className="hidden text-sm font-medium text-secondary-100 lg:block">
-                {user.name}
-              </span>
-            )}
-            <button
-              onClick={() => navigate("/")}
-              className="text-sm font-medium text-primary-700 transition hover:text-primary-600"
-            >
+            {user && <span className="hidden text-sm font-medium text-secondary-100 lg:block">{user.name}</span>}
+            <button onClick={() => navigate("/")} className="text-sm font-medium text-primary-700 transition hover:text-primary-600">
               View Site
             </button>
           </div>
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-secondary-200 p-4 lg:p-6">
           <Outlet />
         </main>

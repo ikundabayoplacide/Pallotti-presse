@@ -28,9 +28,10 @@ const emptyForm: FormState = {
 
 export default function AdminPortfolio() {
   const { data, isLoading, isError } = useGetPortfolioItemsQuery();
-  const [createItem] = useCreatePortfolioItemMutation();
-  const [updateItem] = useUpdatePortfolioItemMutation();
-  const [deleteItem] = useDeletePortfolioItemMutation();
+  const [createItem, { isLoading: isSaving }] = useCreatePortfolioItemMutation();
+  const [updateItem, { isLoading: isUpdating }] = useUpdatePortfolioItemMutation();
+  const [deleteItem, { isLoading: isDeleting }] = useDeletePortfolioItemMutation();
+  const isMutating = isSaving || isUpdating;
 
   const portfolio = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -188,7 +189,7 @@ export default function AdminPortfolio() {
                         <button onClick={() => handleEdit(item)} className="inline-flex items-center gap-1 rounded bg-primary-700 px-3 py-2 text-xs font-semibold text-secondary-200 transition hover:bg-primary-600">
                           <HiPencil className="h-4 w-4" /> Edit
                         </button>
-                        <button onClick={() => handleDelete(item.id)} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100">
+                        <button onClick={() => handleDelete(item.id)} disabled={isDeleting} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50">
                           <HiTrash className="h-4 w-4" />
                         </button>
                       </div>
@@ -240,7 +241,7 @@ export default function AdminPortfolio() {
                     <span className="text-sm font-semibold text-secondary-100">Featured Project</span>
                   </label>
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">{editingItem ? "Update" : "Add Project"}</Button>
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>{isMutating ? "Saving..." : editingItem ? "Update" : "Add Project"}</Button>
                     <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="rounded">Cancel</Button>
                   </div>
                 </form>

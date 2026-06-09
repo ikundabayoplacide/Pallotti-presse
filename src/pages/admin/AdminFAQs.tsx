@@ -26,9 +26,10 @@ const emptyForm: FormState = {
 
 export default function AdminFAQs() {
   const { data, isLoading, isError } = useGetAllFAQsQuery();
-  const [createFAQ] = useCreateFAQMutation();
-  const [updateFAQ] = useUpdateFAQMutation();
-  const [deleteFAQ] = useDeleteFAQMutation();
+  const [createFAQ, { isLoading: isSaving }] = useCreateFAQMutation();
+  const [updateFAQ, { isLoading: isUpdating }] = useUpdateFAQMutation();
+  const [deleteFAQ, { isLoading: isDeleting }] = useDeleteFAQMutation();
+  const isMutating = isSaving || isUpdating;
 
   const faqs = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -196,7 +197,8 @@ export default function AdminFAQs() {
                         </button>
                         <button
                           onClick={() => handleDelete(faq.id)}
-                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                          disabled={isDeleting}
+                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
                         >
                           <HiTrash className="h-4 w-4" />
                         </button>
@@ -295,8 +297,8 @@ export default function AdminFAQs() {
                   </label>
 
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">
-                      {editingFAQ ? "Update FAQ" : "Add FAQ"}
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>
+                      {isMutating ? "Saving..." : editingFAQ ? "Update FAQ" : "Add FAQ"}
                     </Button>
                     <Button
                       type="button"

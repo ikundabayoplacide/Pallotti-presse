@@ -4,12 +4,15 @@ import { authApi } from './api/auth';
 import { blogApi } from './api/blog';
 import { faqsApi } from './api/faqs';
 import { galleryApi } from './api/gallery';
+import { heroSlidesApi } from './api/heroSlides';
+import { publicationAccessApi } from './api/publicationAccess';
 import { messagesApi } from './api/messages';
 import { partnersApi } from './api/partners';
 import { portfolioApi } from './api/portfolio';
 import { publicationsApi } from './api/publications';
 import { servicesApi } from './api/services';
 import { testimonialsApi } from './api/testimonials';
+import { usersApi } from './api/users';
 import authReducer from './features/auth/authSlice';
 
 export const store = configureStore({
@@ -26,6 +29,9 @@ export const store = configureStore({
     [testimonialsApi.reducerPath]: testimonialsApi.reducer,
     [faqsApi.reducerPath]: faqsApi.reducer,
     [publicationsApi.reducerPath]: publicationsApi.reducer,
+    [heroSlidesApi.reducerPath]: heroSlidesApi.reducer,
+    [publicationAccessApi.reducerPath]: publicationAccessApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -40,6 +46,9 @@ export const store = configureStore({
       testimonialsApi.middleware,
       faqsApi.middleware,
       publicationsApi.middleware,
+      heroSlidesApi.middleware,
+      publicationAccessApi.middleware,
+      usersApi.middleware,
     ),
 });
 

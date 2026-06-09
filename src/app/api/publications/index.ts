@@ -13,6 +13,9 @@ export interface Publication {
   category: string;
   published: boolean;
   featured: boolean;
+  isPremium: boolean;
+  price?: string;
+  momoNumber?: string;
   views: number;
   createdAt: string;
   updatedAt: string;
@@ -28,6 +31,7 @@ export const publicationsApi = createApi({
   reducerPath: 'publicationsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
+    credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) headers.set('Authorization', `Bearer ${token}`);
@@ -47,6 +51,7 @@ export const publicationsApi = createApi({
     getPublication: builder.query<ApiResponse<Publication>, string>({
       query: (id) => `/publications/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Publication', id }],
+      keepUnusedDataFor: 3600,
     }),
     createPublication: builder.mutation<ApiResponse<Publication>, FormData>({
       query: (body) => ({

@@ -30,9 +30,10 @@ const emptyForm: FormState = {
 
 export default function AdminServices() {
   const { data, isLoading, isError } = useGetServicesQuery();
-  const [createService] = useCreateServiceMutation();
-  const [updateService] = useUpdateServiceMutation();
-  const [deleteService] = useDeleteServiceMutation();
+  const [createService, { isLoading: isSaving }] = useCreateServiceMutation();
+  const [updateService, { isLoading: isUpdating }] = useUpdateServiceMutation();
+  const [deleteService, { isLoading: isDeleting }] = useDeleteServiceMutation();
+  const isMutating = isSaving || isUpdating;
 
   const services = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -180,7 +181,7 @@ export default function AdminServices() {
                         <button onClick={() => handleEdit(service)} className="inline-flex items-center gap-1 rounded bg-primary-700 px-3 py-2 text-xs font-semibold text-secondary-200 transition hover:bg-primary-600">
                           <HiPencil className="h-4 w-4" /> Edit
                         </button>
-                        <button onClick={() => handleDelete(service.id)} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100">
+                        <button onClick={() => handleDelete(service.id)} disabled={isDeleting} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50">
                           <HiTrash className="h-4 w-4" />
                         </button>
                       </div>
@@ -238,7 +239,7 @@ export default function AdminServices() {
                     <span className="text-sm font-semibold text-secondary-100">Featured Service</span>
                   </label>
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">{editingService ? "Update" : "Add Service"}</Button>
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>{isMutating ? "Saving..." : editingService ? "Update" : "Add Service"}</Button>
                     <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="rounded">Cancel</Button>
                   </div>
                 </form>

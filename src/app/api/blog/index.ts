@@ -28,6 +28,7 @@ export const blogApi = createApi({
   reducerPath: 'blogApi',
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
+    credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) headers.set('Authorization', `Bearer ${token}`);
@@ -43,6 +44,7 @@ export const blogApi = createApi({
     getBlog: builder.query<ApiResponse<BlogPost>, string>({
       query: (id) => `/blog/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Blog', id }],
+      keepUnusedDataFor: 3600,
     }),
     createBlog: builder.mutation<ApiResponse<BlogPost>, FormData>({
       query: (body) => ({

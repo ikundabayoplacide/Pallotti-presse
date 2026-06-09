@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiLockClosed } from "react-icons/hi2";
+import { HiEye, HiEyeSlash, HiLockClosed } from "react-icons/hi2";
 import { toast } from "react-toastify";
 import { useChangePasswordMutation } from "../../app/api/auth";
 import { Button } from "../../components";
@@ -11,6 +11,14 @@ export default function AdminChangePassword() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [showFields, setShowFields] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+
+  const toggleShow = (name: keyof typeof showFields) =>
+    setShowFields((prev) => ({ ...prev, [name]: !prev[name] }));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -50,11 +58,11 @@ export default function AdminChangePassword() {
 
       <div className="max-w-md rounded-lg border border-secondary-300/30 bg-secondary-200 p-8 shadow-[0_12px_30px_rgba(0,0,0,0.04)]">
         <form onSubmit={handleSubmit} className="space-y-5">
-          {[
-            { label: "Current Password", name: "currentPassword", value: formData.currentPassword },
-            { label: "New Password", name: "newPassword", value: formData.newPassword },
-            { label: "Confirm New Password", name: "confirmPassword", value: formData.confirmPassword },
-          ].map((field) => (
+          {([
+            { label: "Current Password", name: "currentPassword" as const },
+            { label: "New Password", name: "newPassword" as const },
+            { label: "Confirm New Password", name: "confirmPassword" as const },
+          ]).map((field) => (
             <div key={field.name}>
               <label className="mb-2 block text-sm font-semibold text-secondary-100">
                 {field.label} *
@@ -64,14 +72,23 @@ export default function AdminChangePassword() {
                   <HiLockClosed className="h-4 w-4 text-secondary-300" />
                 </div>
                 <input
-                  type="password"
+                  type={showFields[field.name] ? "text" : "password"}
                   name={field.name}
-                  value={field.value}
+                  value={formData[field.name]}
                   onChange={handleChange}
                   required
-                  className="w-full rounded border border-secondary-300/30 bg-secondary-200 py-3 pl-10 pr-4 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
+                  className="w-full rounded border border-secondary-300/30 bg-secondary-200 py-3 pl-10 pr-10 text-sm text-secondary-100 placeholder:text-secondary-300 focus:border-primary-700 focus:outline-none"
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => toggleShow(field.name)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary-300 hover:text-secondary-100"
+                >
+                  {showFields[field.name]
+                    ? <HiEyeSlash className="h-4 w-4" />
+                    : <HiEye className="h-4 w-4" />}
+                </button>
               </div>
             </div>
           ))}

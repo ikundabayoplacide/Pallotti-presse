@@ -9,6 +9,7 @@ import {
   HiMicrophone,
 } from "react-icons/hi2";
 import { useGetBlogsQuery } from "../app/api/blog";
+import { useGetHeroSlidesQuery } from "../app/api/heroSlides";
 import { useGetServicesQuery } from "../app/api/services";
 import heroImage from "../assets/im1.jpeg";
 import Img2 from "../assets/im2.jpeg";
@@ -22,38 +23,46 @@ import {
   ProductCard,
 } from "../components";
 
-const heroSlides = [
+const staticHeroSlides = [
   {
     image: Img2,
     title: "Business Cards",
     description:
       "Professional designs, high-quality materials, and fast turnaround for every meeting, event, and client introduction.",
-    primaryAction: "Read More",
-    secondaryAction: "View Cards",
+    primaryLabel: "Read More",
+    primaryLink: "/portfolio",
+    secondaryLabel: "View Cards",
+    secondaryLink: "/contact",
   },
   {
     image: heroImage,
     title: "Custom Packaging",
     description:
       "From boxes to bags, we create packaging solutions that protect your products and make every delivery feel premium.",
-    primaryAction: "Explore Packaging",
-    secondaryAction: "Request Quote",
+    primaryLabel: "Explore Packaging",
+    primaryLink: "/portfolio",
+    secondaryLabel: "Request Quote",
+    secondaryLink: "/contact",
   },
   {
     image: Img3,
     title: "Marketing Materials",
     description:
       "Brochures, flyers, posters, and banners designed to communicate your message clearly and move customers to action.",
-    primaryAction: "See Services",
-    secondaryAction: "Start Project",
+    primaryLabel: "See Services",
+    primaryLink: "/services",
+    secondaryLabel: "Start Project",
+    secondaryLink: "/contact",
   },
   {
     image: Img4,
     title: "Books & Publications",
     description:
       "Book covers, magazines, catalogs, and bound materials delivered with crisp detail, durable stock, and confident finishing.",
-    primaryAction: "Discover More",
-    secondaryAction: "Talk To Us",
+    primaryLabel: "Discover More",
+    primaryLink: "/publications",
+    secondaryLabel: "Talk To Us",
+    secondaryLink: "/contact",
   },
 ];
 
@@ -75,6 +84,9 @@ const fallbackProducts = [
 
 export default function LandingPage() {
   const [activeSlide, setActiveSlide] = useState(0);
+
+  const { data: heroData } = useGetHeroSlidesQuery();
+  const heroSlides = heroData?.data?.length ? heroData.data : staticHeroSlides;
 
   // Fetch services for the Popular Services scroll
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery();
@@ -120,7 +132,7 @@ export default function LandingPage() {
       <section className="relative min-h-[600px] overflow-hidden bg-slate-950 sm:min-h-[460px]">
         {heroSlides.map((slide, index) => (
           <div
-            key={slide.title}
+            key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ${
               index === activeSlide
                 ? "pointer-events-auto opacity-100"
@@ -128,41 +140,60 @@ export default function LandingPage() {
             }`}
           >
             <div className="absolute inset-0">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="h-full w-full object-cover"
-              />
+              {'video' in slide && slide.video ? (
+                <video
+                  src={slide.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <img
+                  src={'image' in slide ? slide.image : (slide as {image: string}).image}
+                  alt={'title' in slide ? slide.title ?? '' : ''}
+                  className="h-full w-full object-cover"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-sky-500/20" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.22),transparent_28%)]" />
             </div>
 
-            <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl items-start px-4 pb-44 pt-2 xxs:px-5 xs:px-6 sm:min-h-[460px] sm:pb-36 sm:px-8 lg:px-10">
-              <div className="max-w-3xl space-y-4 sm:space-y-6">
-                <h1 className="max-w-2xl text-xl font-bold leading-tight text-white xxs:text-2xl sm:text-5xl md:text-6xl lg:text-6xl">
-                  {slide.title}
-                </h1>
-                <p className="max-w-xl text-xs leading-6 text-slate-200 xxs:text-sm xxs:leading-7 sm:text-base">
-                  {slide.description}
-                </p>
-                <div className="flex flex-col gap-3 pt-1 xxs:gap-4 xxs:pt-2 sm:flex-row lg:pl-12">
-                  <Button
-                    to="/portfolio"
-                    size="lg"
-                    className="rounded-full bg-sky-500 text-sm text-white hover:bg-sky-600 xxs:text-base"
-                  >
-                    {slide.primaryAction}
-                  </Button>
-                  <Button
-                    to="/contact"
-                    size="lg"
-                    className="rounded-full border border-white/50 bg-white/10 text-sm text-white backdrop-blur-sm hover:bg-white/20 xxs:text-base"
-                  >
-                    {slide.secondaryAction}
-                  </Button>
+            {'title' in slide && slide.title && (
+              <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl items-start px-4 pb-44 pt-2 xxs:px-5 xs:px-6 sm:min-h-[460px] sm:pb-36 sm:px-8 lg:px-10">
+                <div className="max-w-3xl space-y-4 sm:space-y-6">
+                  <h1 className="max-w-2xl text-xl font-bold leading-tight text-white xxs:text-2xl sm:text-5xl md:text-6xl lg:text-6xl">
+                    {slide.title}
+                  </h1>
+                  {'description' in slide && slide.description && (
+                    <p className="max-w-xl text-xs leading-6 text-slate-200 xxs:text-sm xxs:leading-7 sm:text-base">
+                      {slide.description}
+                    </p>
+                  )}
+                  <div className="flex flex-col gap-3 pt-1 xxs:gap-4 xxs:pt-2 sm:flex-row lg:pl-12">
+                    {'primaryLabel' in slide && slide.primaryLabel && (
+                      <Button
+                        to={slide.primaryLink ?? '/portfolio'}
+                        size="lg"
+                        className="rounded-full bg-sky-500 text-sm text-white hover:bg-sky-600 xxs:text-base"
+                      >
+                        {slide.primaryLabel}
+                      </Button>
+                    )}
+                    {'secondaryLabel' in slide && slide.secondaryLabel && (
+                      <Button
+                        to={slide.secondaryLink ?? '/contact'}
+                        size="lg"
+                        className="rounded-full border border-white/50 bg-white/10 text-sm text-white backdrop-blur-sm hover:bg-white/20 xxs:text-base"
+                      >
+                        {slide.secondaryLabel}
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
 
@@ -186,9 +217,9 @@ export default function LandingPage() {
 
         {/* Dots */}
         <div className="absolute bottom-28 left-1/2 z-20 flex -translate-x-1/2 gap-2 xxs:bottom-24 sm:bottom-20">
-          {heroSlides.map((slide, index) => (
+          {heroSlides.map((_slide, index) => (
             <button
-              key={slide.title}
+              key={index}
               onClick={() => setActiveSlide(index)}
               className={`h-2.5 w-2.5 rounded-full transition-all ${
                 index === activeSlide

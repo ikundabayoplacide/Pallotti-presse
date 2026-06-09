@@ -3,15 +3,18 @@ import { useGetPartnersQuery } from "../app/api/partners";
 import PageSection from "./PageSection";
 
 const cardClass =
-  "flex items-center justify-center rounded-lg border border-secondary-300/30 bg-style-600/50 p-6 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)] w-40";
+  "flex flex-col items-center justify-center gap-2 rounded-lg border border-secondary-300/30 bg-style-600/50 p-6 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.08)] w-40";
 
 function PartnerCard({ partner }: { partner: Partner }) {
   const inner = (
-    <img
-      src={partner.logo}
-      alt={partner.name}
-      className="h-12 w-auto object-contain opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-    />
+    <>
+      <img
+        src={partner.logo}
+        alt={partner.name}
+        className="h-10 w-auto object-contain opacity-100  transition-all hover:opacity-100 hover:grayscale-0"
+      />
+      <span className="text-xs font-semibold text-secondary-300 text-center line-clamp-1">{partner.name}</span>
+    </>
   );
 
   if (partner.website) {
@@ -20,7 +23,6 @@ function PartnerCard({ partner }: { partner: Partner }) {
         href={partner.website}
         target="_blank"
         rel="noopener noreferrer"
-        title={partner.name}
         className={cardClass}
       >
         {inner}
@@ -29,7 +31,7 @@ function PartnerCard({ partner }: { partner: Partner }) {
   }
 
   return (
-    <div title={partner.name} className={cardClass}>
+    <div className={cardClass}>
       {inner}
     </div>
   );

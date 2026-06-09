@@ -30,9 +30,10 @@ const categories = ["General", "Business Printing", "Packaging", "Marketing", "E
 
 export default function AdminGallery() {
   const { data, isLoading, isError } = useGetAllImagesQuery();
-  const [createImage] = useCreateImageMutation();
-  const [updateImage] = useUpdateImageMutation();
-  const [deleteImage] = useDeleteImageMutation();
+  const [createImage, { isLoading: isSaving }] = useCreateImageMutation();
+  const [updateImage, { isLoading: isUpdating }] = useUpdateImageMutation();
+  const [deleteImage, { isLoading: isDeleting }] = useDeleteImageMutation();
+  const isMutating = isSaving || isUpdating;
 
   const images = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -194,7 +195,8 @@ export default function AdminGallery() {
                 </button>
                 <button
                   onClick={() => handleDelete(img.id)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow transition hover:bg-red-700"
+                  disabled={isDeleting}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-red-600 text-white shadow transition hover:bg-red-700 disabled:opacity-50"
                 >
                   <HiTrash className="h-4 w-4" />
                 </button>
@@ -273,7 +275,7 @@ export default function AdminGallery() {
                   </div>
 
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">{editingImage ? "Update" : "Upload"}</Button>
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>{isMutating ? "Saving..." : editingImage ? "Update" : "Upload"}</Button>
                     <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="rounded">Cancel</Button>
                   </div>
                 </form>

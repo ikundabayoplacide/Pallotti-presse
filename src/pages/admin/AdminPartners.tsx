@@ -28,9 +28,10 @@ const emptyForm: FormState = {
 
 export default function AdminPartners() {
   const { data, isLoading, isError } = useGetPartnersQuery();
-  const [createPartner] = useCreatePartnerMutation();
-  const [updatePartner] = useUpdatePartnerMutation();
-  const [deletePartner] = useDeletePartnerMutation();
+  const [createPartner, { isLoading: isSaving }] = useCreatePartnerMutation();
+  const [updatePartner, { isLoading: isUpdating }] = useUpdatePartnerMutation();
+  const [deletePartner, { isLoading: isDeleting }] = useDeletePartnerMutation();
+  const isMutating = isSaving || isUpdating;
 
   const partners = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -248,7 +249,8 @@ export default function AdminPartners() {
                         </button>
                         <button
                           onClick={() => handleDelete(partner.id)}
-                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                          disabled={isDeleting}
+                          className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50"
                         >
                           <HiTrash className="h-4 w-4" />
                         </button>
@@ -392,12 +394,8 @@ export default function AdminPartners() {
                   </div>
 
                   <div className="flex gap-3 pt-2">
-                    <Button
-                      type="submit"
-                      variant="secondary"
-                      className="flex-1 rounded"
-                    >
-                      {editingPartner ? "Update Partner" : "Add Partner"}
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>
+                      {isMutating ? "Saving..." : editingPartner ? "Update Partner" : "Add Partner"}
                     </Button>
                     <Button
                       type="button"

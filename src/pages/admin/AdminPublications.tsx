@@ -17,6 +17,9 @@ interface FormState {
   category: string;
   published: boolean;
   featured: boolean;
+  isPremium: boolean;
+  price: string;
+  momoNumber: string;
   pubType: PubType;
 }
 
@@ -25,6 +28,9 @@ const emptyForm: FormState = {
   category: "General",
   published: false,
   featured: false,
+  isPremium: false,
+  price: "",
+  momoNumber: "",
   pubType: "article",
 };
 
@@ -96,9 +102,10 @@ function RichEditor({
 
 export default function AdminPublications() {
   const { data, isLoading, isError } = useGetAllPublicationsQuery();
-  const [createPublication] = useCreatePublicationMutation();
-  const [updatePublication] = useUpdatePublicationMutation();
-  const [deletePublication] = useDeletePublicationMutation();
+  const [createPublication, { isLoading: isSaving }] = useCreatePublicationMutation();
+  const [updatePublication, { isLoading: isUpdating }] = useUpdatePublicationMutation();
+  const [deletePublication, { isLoading: isDeleting }] = useDeletePublicationMutation();
+  const isMutating = isSaving || isUpdating;
 
   const publications = data?.data ?? [];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -129,6 +136,9 @@ export default function AdminPublications() {
       category: pub.category,
       published: pub.published,
       featured: pub.featured,
+      isPremium: pub.isPremium ?? false,
+      price: pub.price ?? "",
+      momoNumber: pub.momoNumber ?? "",
       pubType: pub.fileContent ? "file" : "article",
     });
     setInitialContent(pub.content ?? "");
@@ -174,6 +184,9 @@ export default function AdminPublications() {
     fd.append("category", formData.category);
     fd.append("published", String(formData.published));
     fd.append("featured", String(formData.featured));
+    fd.append("isPremium", String(formData.isPremium));
+    if (formData.price) fd.append("price", formData.price);
+    if (formData.momoNumber) fd.append("momoNumber", formData.momoNumber);
     if (formData.pubType === "article") {
       fd.append("content", content);
     }
@@ -275,7 +288,7 @@ export default function AdminPublications() {
                         <button onClick={() => handleEdit(pub)} className="inline-flex items-center gap-1 rounded bg-primary-700 px-3 py-2 text-xs font-semibold text-secondary-200 transition hover:bg-primary-600">
                           <HiPencil className="h-4 w-4" /> Edit
                         </button>
-                        <button onClick={() => handleDelete(pub.id)} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100">
+                        <button onClick={() => handleDelete(pub.id)} disabled={isDeleting} className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50">
                           <HiTrash className="h-4 w-4" />
                         </button>
                       </div>
@@ -368,10 +381,28 @@ export default function AdminPublications() {
                       <input type="checkbox" name="featured" checked={formData.featured} onChange={handleChange} className="h-4 w-4 rounded border-secondary-300/30 text-primary-700" />
                       <span className="text-sm font-semibold text-secondary-100">Featured</span>
                     </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" name="isPremium" checked={formData.isPremium} onChange={handleChange} className="h-4 w-4 rounded border-secondary-300/30 text-primary-700" />
+                      <span className="text-sm font-semibold text-secondary-100">Premium (Paid)</span>
+                    </label>
                   </div>
 
+                  {/* Premium fields */}
+                  {formData.isPremium && (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-secondary-100">Price *</label>
+                        <input type="text" name="price" value={formData.price} onChange={handleChange} className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none" placeholder="e.g. 1000 RWF" />
+                      </div>
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-secondary-100">MoMo Number *</label>
+                        <input type="text" name="momoNumber" value={formData.momoNumber} onChange={handleChange} className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none" placeholder="e.g. 0788313617" />
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex gap-3 pt-2">
-                    <Button type="submit" variant="secondary" className="flex-1 rounded">{editingItem ? "Update" : "Add Publication"}</Button>
+                    <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isMutating}>{isMutating ? "Saving..." : editingItem ? "Update" : "Add Publication"}</Button>
                     <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} className="rounded">Cancel</Button>
                   </div>
                 </form>
