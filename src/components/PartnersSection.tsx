@@ -8,11 +8,11 @@ const cardClass =
 function PartnerCard({ partner }: { partner: Partner }) {
   const inner = (
     <>
-      <img
+      {partner.logo && <img
         src={partner.logo}
         alt={partner.name}
         className="h-10 w-auto object-contain opacity-100  transition-all hover:opacity-100 hover:grayscale-0"
-      />
+      />}
       <span className="text-xs font-semibold text-secondary-300 text-center line-clamp-1">{partner.name}</span>
     </>
   );

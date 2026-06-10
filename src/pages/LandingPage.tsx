@@ -96,12 +96,18 @@ export default function LandingPage() {
 
   const bgImage = bgSlide?.image ?? (activeContentSlides[0] as { image?: string })?.image ?? "";
 
-  const goNext = () => setActiveSlide((c) => (c + 1) % activeContentSlides.length);
-  const goPrev = () => setActiveSlide((c) => c === 0 ? activeContentSlides.length - 1 : c - 1);
+  const goNext = () => setActiveSlide((c) => activeContentSlides.length > 0 ? (c + 1) % activeContentSlides.length : 0);
+  const goPrev = () => setActiveSlide((c) => activeContentSlides.length > 0 ? (c === 0 ? activeContentSlides.length - 1 : c - 1) : 0);
 
   useEffect(() => {
-    const interval = window.setInterval(goNext, 5000);
+    if (activeContentSlides.length === 0) return;
+    const interval = window.setInterval(goNext, 10000);
     return () => window.clearInterval(interval);
+  }, [activeContentSlides.length]);
+
+  // Reset slide index when slides change (e.g. after loading)
+  useEffect(() => {
+    setActiveSlide(0);
   }, [activeContentSlides.length]);
 
   // Fetch services for the Popular Services scroll
@@ -127,7 +133,7 @@ export default function LandingPage() {
 
         {/* Background — single fixed image, never changes */}
         <div className="absolute inset-0">
-          <img src={bgImage} alt="" className="h-full w-full object-cover" />
+          {bgImage && <img src={bgImage} alt="" className="h-full w-full object-cover" />}
           <div className="absolute inset-0 bg-slate-900/55" />
         </div>
 
@@ -144,9 +150,9 @@ export default function LandingPage() {
             <div className="w-full overflow-hidden rounded-xl border border-white/20 bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }}>
               {videoSlide?.video ? (
                 <video src={videoSlide.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
-              ) : (
+              ) : bgImage ? (
                 <img src={bgImage} alt="" className="h-full w-full object-cover opacity-75" />
-              )}
+              ) : null}
             </div>
 
             {/* Right card + nav */}
@@ -170,7 +176,7 @@ export default function LandingPage() {
                       {slide.description && (
                         <>
                           <div className="my-2 h-0.5 w-12 rounded bg-primary-600" />
-                          <div className="overflow-y-auto space-y-1 text-sm leading-6 text-gray-100" style={{ maxHeight: '160px' }}>
+                          <div className="overflow-y-auto no-scrollbar space-y-1 text-sm leading-6 text-gray-100" style={{ maxHeight: '160px' }}>
                             {slide.description.split('\n').map((line, i) => {
                               const trimmed = line.trim();
                               if (!trimmed) return null;

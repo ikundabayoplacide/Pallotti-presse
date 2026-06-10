@@ -26,9 +26,7 @@ export default function NavBar() {
       {/* Info bar */}
       <div className="bg-primary-800 text-secondary-200 overflow-hidden max-h-8">
         <Container className="hidden items-center justify-between gap-4 py-1 text-xs lg:flex">
-          <Link to="/contact" className="tracking-[0.1em] hover:underline">
-            Pallotti Presse Ltd
-          </Link>
+          SOCIETE DE L’APOSTOLAT CATHOLIQUE
           <div className="flex items-center gap-6">
             <p>Call Us: +250788313617</p>
             <p>Mail Us: info@pallottipresse.com</p>
