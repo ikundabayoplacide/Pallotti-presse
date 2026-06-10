@@ -35,6 +35,7 @@ export const partnersApi = createApi({
     getPartners: builder.query<ApiResponse<Partner[]>, void>({
       query: () => '/partners',
       providesTags: ['Partner'],
+      keepUnusedDataFor: 300,
     }),
     createPartner: builder.mutation<ApiResponse<Partner>, FormData>({
       query: (body) => ({

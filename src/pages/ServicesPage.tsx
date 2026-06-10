@@ -118,7 +118,7 @@ export default function ServicesPage() {
 
       {/* CTA Section */}
       <PageSection className="bg-primary-800">
-        <div className="bg-primary-700/70 p-8 text-center sm:p-12">
+        <div className="bg-primary-600 p-8 text-center sm:p-12">
           <p className="text-sm tracking-[0.18em] text-custom-300 uppercase">Ready to Get Started?</p>
           <h2 className="mt-4 text-3xl font-semibold text-secondary-200 sm:text-4xl">Let's bring your printing project to life</h2>
           <div className="mt-8 flex justify-center">

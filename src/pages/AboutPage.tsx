@@ -93,7 +93,7 @@ export default function AboutPage() {
       )}
 
       <PageSection className="bg-primary-800">
-        <div className="rounded-[2.25rem] bg-primary-700/70 p-8 text-center sm:p-12">
+        <div className="rounded-[2.25rem] bg-primary-600 p-8 text-center sm:p-12">
           <p className="text-lg tracking-[0.18em] text-custom-100 uppercase font-bold">
             Start Your Next Print Project
           </p>

@@ -40,6 +40,7 @@ export const blogApi = createApi({
     getBlogs: builder.query<ApiResponse<BlogPost[]>, void>({
       query: () => '/blog',
       providesTags: ['Blog'],
+      keepUnusedDataFor: 300,
     }),
     getBlog: builder.query<ApiResponse<BlogPost>, string>({
       query: (id) => `/blog/${id}`,

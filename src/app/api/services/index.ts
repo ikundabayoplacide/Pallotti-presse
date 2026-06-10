@@ -44,6 +44,7 @@ export const servicesApi = createApi({
     getServices: builder.query<ApiResponse<Service[]>, void>({
       query: () => '/services',
       providesTags: ['Service'],
+      keepUnusedDataFor: 300,
     }),
     getService: builder.query<ApiResponse<Service>, string>({
       query: (id) => `/services/${id}`,

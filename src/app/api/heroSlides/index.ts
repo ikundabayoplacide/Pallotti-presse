@@ -4,15 +4,15 @@ import type { RootState } from '../../store';
 
 export interface HeroSlide {
   id: string;
-  type: 'image' | 'video';
+  role: 'background' | 'video' | 'slide';
   image?: string;
+  video?: string;
   title?: string;
   description?: string;
   primaryLabel?: string;
   primaryLink?: string;
   secondaryLabel?: string;
   secondaryLink?: string;
-  video?: string;
   order: number;
   active: boolean;
   createdAt: string;
@@ -40,6 +40,7 @@ export const heroSlidesApi = createApi({
     getHeroSlides: builder.query<ApiResponse<HeroSlide[]>, void>({
       query: () => '/hero-slides',
       providesTags: ['HeroSlide'],
+      keepUnusedDataFor: 300,
     }),
     getAllHeroSlides: builder.query<ApiResponse<HeroSlide[]>, void>({
       query: () => '/hero-slides/all',

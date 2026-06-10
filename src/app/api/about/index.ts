@@ -48,6 +48,7 @@ export const aboutApi = createApi({
     getAbout: builder.query<ApiResponse<AboutContent>, void>({
       query: () => '/about',
       providesTags: ['About'],
+      keepUnusedDataFor: 300,
     }),
     updateAbout: builder.mutation<ApiResponse<AboutContent>, UpdateAboutPayload>({
       query: (body) => ({ url: '/about', method: 'PUT', body }),

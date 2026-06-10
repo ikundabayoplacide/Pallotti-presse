@@ -347,7 +347,7 @@ export default function ContactPage() {
             </div>
 
             {/* Quick Contact */}
-            <div className="bg-primary-800 p-8 text-secondary-200">
+            <div className="bg-primary-600 p-8 text-secondary-200">
               <h3 className="mb-4 text-xl font-semibold">
                 Need Immediate Assistance?
               </h3>
@@ -436,7 +436,7 @@ export default function ContactPage() {
 
       {/* CTA Section */}
       <PageSection className="bg-primary-800">
-        <div className="bg-primary-700/70 p-8 text-center sm:p-12">
+        <div className="bg-primary-600 p-8 text-center sm:p-12">
           <p className="text-sm tracking-[0.18em] text-custom-300 uppercase">
             Ready to Start?
           </p>

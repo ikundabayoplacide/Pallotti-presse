@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  HiArrowLeft,
-  HiArrowRight,
-  HiCheckBadge,
-  HiClock,
-  HiHandThumbUp,
-  HiLightBulb,
-  HiMicrophone,
+    HiArrowLeft,
+    HiArrowRight,
+    HiCheckBadge,
+    HiClock,
+    HiHandThumbUp,
+    HiLightBulb,
+    HiMicrophone,
 } from "react-icons/hi2";
 import { useGetBlogsQuery } from "../app/api/blog";
 import { useGetHeroSlidesQuery } from "../app/api/heroSlides";
@@ -16,11 +16,11 @@ import Img2 from "../assets/im2.jpeg";
 import Img3 from "../assets/im3.jpeg";
 import Img4 from "../assets/im4.jpeg";
 import {
-  AboutUsSection,
-  Button,
-  PageSection,
-  PartnersSection,
-  ProductCard,
+    AboutUsSection,
+    Button,
+    PageSection,
+    PartnersSection,
+    ProductCard,
 } from "../components";
 
 const staticHeroSlides = [
@@ -85,8 +85,24 @@ const fallbackProducts = [
 export default function LandingPage() {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const { data: heroData } = useGetHeroSlidesQuery();
-  const heroSlides = heroData?.data?.length ? heroData.data : staticHeroSlides;
+  const { data: heroData, isLoading: heroLoading } = useGetHeroSlidesQuery();
+  const allSlides = heroData?.data ?? [];
+
+  // Split by role
+  const bgSlide = allSlides.find((s) => s.role === 'background' && s.active);
+  const videoSlide = allSlides.find((s) => s.role === 'video' && s.active);
+  const contentSlides = allSlides.filter((s) => s.role === 'slide' && s.active);
+  const activeContentSlides = heroLoading ? [] : contentSlides.length > 0 ? contentSlides : staticHeroSlides;
+
+  const bgImage = bgSlide?.image ?? (activeContentSlides[0] as { image?: string })?.image ?? "";
+
+  const goNext = () => setActiveSlide((c) => (c + 1) % activeContentSlides.length);
+  const goPrev = () => setActiveSlide((c) => c === 0 ? activeContentSlides.length - 1 : c - 1);
+
+  useEffect(() => {
+    const interval = window.setInterval(goNext, 5000);
+    return () => window.clearInterval(interval);
+  }, [activeContentSlides.length]);
 
   // Fetch services for the Popular Services scroll
   const { data: servicesData, isLoading: servicesLoading } = useGetServicesQuery();
@@ -96,166 +112,113 @@ export default function LandingPage() {
   const { data: blogsData } = useGetBlogsQuery();
   const latestPosts = (blogsData?.data ?? []).slice(0, 3);
 
-  // Use API services if available, otherwise fall back to static data
   const displayProducts =
     services.length > 0
       ? services.map((s) => ({ name: s.name, image: s.image }))
       : fallbackProducts;
 
-  const goToPreviousSlide = () => {
-    setActiveSlide((current) =>
-      current === 0 ? heroSlides.length - 1 : current - 1,
-    );
-  };
-
-  const goToNextSlide = () => {
-    setActiveSlide((current) => (current + 1) % heroSlides.length);
-  };
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % heroSlides.length);
-    }, 5000);
-    return () => window.clearInterval(interval);
-  }, []);
-
   const formatDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
   return (
     <>
-      {/* Hero Slider */}
-      <section className="relative min-h-[600px] overflow-hidden bg-slate-950 sm:min-h-[460px]">
-        {heroSlides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === activeSlide
-                ? "pointer-events-auto opacity-100"
-                : "pointer-events-none opacity-0"
-            }`}
-          >
-            <div className="absolute inset-0">
-              {'video' in slide && slide.video ? (
-                <video
-                  src={slide.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <img
-                  src={'image' in slide ? slide.image : (slide as {image: string}).image}
-                  alt={'title' in slide ? slide.title ?? '' : ''}
-                  className="h-full w-full object-cover"
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-sky-500/20" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(56,189,248,0.22),transparent_28%)]" />
-            </div>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-slate-950" style={{ minHeight: "460px" }}>
 
-            {'title' in slide && slide.title && (
-              <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl items-start px-4 pb-44 pt-2 xxs:px-5 xs:px-6 sm:min-h-[460px] sm:pb-36 sm:px-8 lg:px-10">
-                <div className="max-w-3xl space-y-4 sm:space-y-6">
-                  <h1 className="max-w-2xl text-xl font-bold leading-tight text-white xxs:text-2xl sm:text-5xl md:text-6xl lg:text-6xl">
-                    {slide.title}
-                  </h1>
-                  {'description' in slide && slide.description && (
-                    <p className="max-w-xl text-xs leading-6 text-slate-200 xxs:text-sm xxs:leading-7 sm:text-base">
-                      {slide.description}
-                    </p>
-                  )}
-                  <div className="flex flex-col gap-3 pt-1 xxs:gap-4 xxs:pt-2 sm:flex-row lg:pl-12">
-                    {'primaryLabel' in slide && slide.primaryLabel && (
-                      <Button
-                        to={slide.primaryLink ?? '/portfolio'}
-                        size="lg"
-                        className="rounded-full bg-sky-500 text-sm text-white hover:bg-sky-600 xxs:text-base"
-                      >
-                        {slide.primaryLabel}
-                      </Button>
-                    )}
-                    {'secondaryLabel' in slide && slide.secondaryLabel && (
-                      <Button
-                        to={slide.secondaryLink ?? '/contact'}
-                        size="lg"
-                        className="rounded-full border border-white/50 bg-white/10 text-sm text-white backdrop-blur-sm hover:bg-white/20 xxs:text-base"
-                      >
-                        {slide.secondaryLabel}
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Prev / Next */}
-        <button
-          type="button"
-          onClick={goToPreviousSlide}
-          className="absolute left-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:left-8"
-          aria-label="Previous slide"
-        >
-          <HiArrowLeft className="h-6 w-6" />
-        </button>
-        <button
-          type="button"
-          onClick={goToNextSlide}
-          className="absolute right-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:right-8"
-          aria-label="Next slide"
-        >
-          <HiArrowRight className="h-6 w-6" />
-        </button>
-
-        {/* Dots */}
-        <div className="absolute bottom-28 left-1/2 z-20 flex -translate-x-1/2 gap-2 xxs:bottom-24 sm:bottom-20">
-          {heroSlides.map((_slide, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveSlide(index)}
-              className={`h-2.5 w-2.5 rounded-full transition-all ${
-                index === activeSlide
-                  ? "bg-sky-500"
-                  : "bg-white/45 hover:bg-white/80"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+        {/* Background — single fixed image, never changes */}
+        <div className="absolute inset-0">
+          <img src={bgImage} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-slate-900/55" />
         </div>
 
-        {/* Features bar */}
-        {/* <div className="absolute bottom-0 left-0 right-0 z-20">
-          <div className="mx-auto max-w-5xl px-3 pb-4 xxs:px-4 xxs:pb-5 xs:px-6 sm:px-8 lg:px-10">
-            <div className="rounded-[1.5rem] bg-white/95 px-3 py-3 shadow-[0_20px_50px_rgba(15,23,42,0.16)] backdrop-blur-sm xxs:rounded-[1.75rem] xxs:px-4 xxs:py-4 sm:px-5 sm:py-5">
-              <div className="flex flex-wrap items-center justify-center gap-3 xxs:gap-4 sm:gap-6 md:gap-10 lg:gap-12">
-                {features.map((feature) => {
-                  const Icon = feature.icon;
-                  return (
-                    <div
-                      key={feature.label}
-                      className="flex flex-col items-center gap-1.5 text-center xxs:gap-2"
-                    >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-blue-400 bg-white xxs:h-12 xxs:w-12 sm:h-14 sm:w-14">
-                        <Icon className="h-5 w-5 text-blue-500 xxs:h-6 xxs:w-6 sm:h-7 sm:w-7" />
+        {heroLoading ? (
+          <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 md:flex-row md:items-start lg:px-10">
+            <div className="w-full animate-pulse rounded-xl bg-white/10 md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }} />
+            <div className="flex flex-col gap-3 md:w-[45%] mt-10">
+              <div className="h-[300px] animate-pulse rounded-xl bg-white/10" />
+            </div>
+          </div>
+        ) : (
+          <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 xxs:px-5 xs:px-6 sm:px-8 md:flex-row md:items-start lg:px-10">
+            {/* Left card — video or bg image */}
+            <div className="w-full overflow-hidden rounded-xl border border-white/20 bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }}>
+              {videoSlide?.video ? (
+                <video src={videoSlide.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+              ) : (
+                <img src={bgImage} alt="" className="h-full w-full object-cover opacity-75" />
+              )}
+            </div>
+
+            {/* Right card + nav */}
+            <div className="flex flex-col gap-2 md:w-[45%] mt-10">
+              <div className="overflow-hidden rounded-xl bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,0.4)]" style={{ height: "300px" }}>
+                {activeContentSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className={`relative h-full flex-col ${ index === activeSlide ? "flex" : "hidden" }`}
+                    style={{
+                      backgroundImage: (slide as { image?: string }).image ? `url(${(slide as { image: string }).image})` : undefined,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-black/60 rounded-xl" />
+                    <div className="relative z-10 flex h-full flex-col p-5 overflow-hidden">
+                      {slide.title && (
+                        <h1 className="text-xl font-bold leading-snug text-white sm:text-2xl">{slide.title}</h1>
+                      )}
+                      {slide.description && (
+                        <>
+                          <div className="my-2 h-0.5 w-12 rounded bg-primary-600" />
+                          <div className="overflow-y-auto space-y-1 text-sm leading-6 text-gray-100" style={{ maxHeight: '160px' }}>
+                            {slide.description.split('\n').map((line, i) => {
+                              const trimmed = line.trim();
+                              if (!trimmed) return null;
+                              const isBullet = /^(✅|[-*•]|\d+\.)/.test(trimmed);
+                              return isBullet ? (
+                                <div key={i}>{trimmed}</div>
+                              ) : (
+                                <p key={i}>{trimmed}</p>
+                              );
+                            })}
+                          </div>
+                        </>
+                      )}
+                      <div className="mt-auto pt-3">
+                        {slide.primaryLabel && (
+                          <Button to={slide.primaryLink ?? "/portfolio"} size="sm" className="rounded bg-primary-600 text-white hover:bg-primary-700">
+                            {slide.primaryLabel}
+                          </Button>
+                        )}
                       </div>
-                      <p className="text-[10px] font-medium text-gray-700 xxs:text-xs sm:text-sm">
-                        {feature.label}
-                      </p>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
+              </div>
+
+              {/* Nav dots & arrows */}
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  {activeContentSlides.map((_, index) => (
+                    <button key={index} onClick={() => setActiveSlide(index)}
+                      className={`rounded-full transition-all ${
+                        index === activeSlide ? "h-2 w-6 bg-primary-600" : "h-2 w-2 bg-gray-400 hover:bg-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-1">
+                  <button onClick={goPrev} className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-white transition hover:border-primary-600 hover:text-primary-600">
+                    <HiArrowLeft className="h-4 w-4" />
+                  </button>
+                  <button onClick={goNext} className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-white transition hover:border-primary-600 hover:text-primary-600">
+                    <HiArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div> */}
+        )}
       </section>
 
       {/* Features bar */}
@@ -444,7 +407,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <PageSection id="blog" className="bg-primary-800">
-        <div className="bg-primary-700/70 p-8 text-center sm:p-12">
+        <div className="bg-primary-600 p-8 text-center sm:p-12">
           <p className="text-sm tracking-[0.18em] text-custom-300 uppercase">
             Print With Confidence
           </p>
