@@ -40,9 +40,11 @@ export default function AboutPage() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
-          {values.map((value) => (
+          {values.map((value, i) => (
             <article
               key={value.title}
+              data-reveal
+              style={{ transitionDelay: `${i * 100}ms` }}
               className="rounded-4xl border border-secondary-100/15 bg-style-600/70 p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
             >
               <h3 className="text-3xl font-semibold text-secondary-100">{value.title}</h3>
@@ -59,8 +61,8 @@ export default function AboutPage() {
             <div className="mx-auto h-1 w-24 bg-secondary-100" />
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((t) => (
-              <article key={t.id} className="flex flex-col gap-4 rounded-lg border border-secondary-300/20 bg-secondary-200 p-6 shadow-[0_12px_30px_rgba(0,0,0,0.06)]">
+            {testimonials.map((t, i) => (
+              <article key={t.id} data-reveal style={{ transitionDelay: `${i * 100}ms` }} className="flex flex-col gap-4 rounded-lg border border-secondary-300/20 bg-secondary-200 p-6 shadow-[0_12px_30px_rgba(0,0,0,0.06)]">
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <svg key={i} className={`h-4 w-4 ${i < t.rating ? 'text-yellow-400' : 'text-secondary-300/30'}`} fill="currentColor" viewBox="0 0 20 20">
@@ -93,7 +95,7 @@ export default function AboutPage() {
       )}
 
       <PageSection className="bg-primary-800">
-        <div className="rounded-[2.25rem] bg-primary-600 p-8 text-center sm:p-12">
+        <div data-reveal className="rounded-[2.25rem] bg-primary-600 p-8 text-center sm:p-12">
           <p className="text-lg tracking-[0.18em] text-custom-100 uppercase font-bold">
             Start Your Next Print Project
           </p>

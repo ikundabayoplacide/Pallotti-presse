@@ -326,9 +326,11 @@ export default function LandingPage() {
             title: "Tailored solutions for brand, retail, and event printing.",
             desc: "Whether you need packaging, cards, signage, or book covers, the layout is ready to showcase a real print-house catalog.",
           },
-        ].map((item) => (
+        ].map((item, i) => (
           <div
             key={item.label}
+            data-reveal
+            style={{ transitionDelay: `${i * 100}ms` }}
             className="bg-secondary-200 rounded p-8 shadow-[0_18px_40px_rgba(0,0,0,0.06)]"
           >
             <p className="text-sm tracking-[0.18em] text-secondary-100 uppercase">
@@ -357,11 +359,13 @@ export default function LandingPage() {
             <div className="mx-auto h-1 w-24 bg-secondary-100" />
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {latestPosts.map((post) => (
+          <div className={`${latestPosts.length >= 3 ? 'grid gap-8 md:grid-cols-2 lg:grid-cols-3' : 'flex flex-wrap justify-center gap-8'}`}>
+            {latestPosts.map((post, i) => (
               <article
                 key={post.id}
-                className="group overflow-hidden rounded border border-secondary-300/20 bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
+                data-reveal
+                style={{ transitionDelay: `${i * 100}ms` }}
+                className="group overflow-hidden rounded border border-secondary-300/20 bg-style-600/50 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)] w-full sm:w-80"
               >
                 <div className="relative h-52 overflow-hidden">
                   <img

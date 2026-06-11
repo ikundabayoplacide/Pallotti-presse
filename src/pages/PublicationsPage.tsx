@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { HiBookOpen, HiCalendar, HiEye, HiLockClosed } from "react-icons/hi2";
 import { useGetPublicationsQuery, type Publication } from "../app/api/publications";
-import { Button, PageSection } from "../components";
+import { Button, PageSection, Pagination } from "../components";
+
+const PER_PAGE = 8;
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
@@ -16,12 +18,13 @@ function getExcerpt(pub: Publication): string {
   return "No preview available.";
 }
 
-// ── Publication Card ──────────────────────────────────────────────────────────
-function PublicationCard({ pub }: { pub: Publication }) {
+function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
   const isFileBased = Boolean(pub.fileName);
-
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-secondary-300/20 bg-secondary-200 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.10)]">
+    <div
+      data-reveal
+      style={{ transitionDelay: `${index * 80}ms` }}
+      className="flex flex-col overflow-hidden rounded-lg border border-secondary-300/20 bg-secondary-200 shadow-[0_12px_30px_rgba(0,0,0,0.04)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.10)] w-full sm:w-72">
       <div className="relative h-48 overflow-hidden bg-primary-800/10">
         {pub.coverImage ? (
           <img src={pub.coverImage} alt={pub.title} className="h-full w-full object-cover" />
@@ -31,9 +34,7 @@ function PublicationCard({ pub }: { pub: Publication }) {
           </div>
         )}
         <div className="absolute left-3 top-3 flex gap-1.5">
-          {pub.featured && (
-            <span className="rounded-full bg-primary-700 px-3 py-1 text-xs font-semibold text-secondary-200">Featured</span>
-          )}
+          {pub.featured && <span className="rounded-full bg-primary-700 px-3 py-1 text-xs font-semibold text-secondary-200">Featured</span>}
           {pub.isPremium && (
             <span className="flex items-center gap-1 rounded-full bg-yellow-500 px-3 py-1 text-xs font-semibold text-white">
               <HiLockClosed className="h-3 w-3" /> {pub.price}
@@ -41,19 +42,14 @@ function PublicationCard({ pub }: { pub: Publication }) {
           )}
         </div>
       </div>
-
       <div className="flex flex-1 flex-col p-5">
-        <span className="mb-2 inline-block self-start rounded-full bg-primary-700/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary-700 uppercase">
-          {pub.category}
-        </span>
+        <span className="mb-2 inline-block self-start rounded-full bg-primary-700/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary-700 uppercase">{pub.category}</span>
         <h3 className="mb-2 text-lg font-semibold leading-snug text-secondary-100 line-clamp-2">{pub.title}</h3>
         <p className="mb-4 flex-1 text-sm leading-6 text-secondary-300 line-clamp-3">{getExcerpt(pub)}</p>
-
         <div className="mb-4 flex items-center gap-4 text-xs text-secondary-300">
           <span className="flex items-center gap-1"><HiCalendar className="h-3.5 w-3.5" />{formatDate(pub.createdAt)}</span>
           <span className="flex items-center gap-1"><HiEye className="h-3.5 w-3.5" />{pub.views} views</span>
         </div>
-
         {pub.isPremium ? (
           <Button to={`/publications/${pub.id}`} variant="secondary" size="sm" className="w-full rounded flex items-center justify-center gap-2">
             <HiLockClosed className="h-4 w-4" /> Read Preview
@@ -87,9 +83,14 @@ export default function PublicationsPage() {
   const { data, isLoading, isError } = useGetPublicationsQuery();
   const publications = data?.data ?? [];
   const [activeCategory, setActiveCategory] = useState("All");
+  const [page, setPage] = useState(1);
 
   const categories = ["All", ...Array.from(new Set(publications.map((p) => p.category)))];
   const filtered = activeCategory === "All" ? publications : publications.filter((p) => p.category === activeCategory);
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+  const handleCategory = (cat: string) => { setActiveCategory(cat); setPage(1); };
 
   return (
     <>
@@ -104,9 +105,9 @@ export default function PublicationsPage() {
 
       <PageSection className="bg-secondary-200">
         {!isLoading && !isError && publications.length > 0 && (
-          <div className="mb-8 flex flex-wrap gap-2">
+          <div className="mb-8 flex flex-wrap justify-center gap-2">
             {categories.map((cat) => (
-              <button key={cat} onClick={() => setActiveCategory(cat)}
+              <button key={cat} onClick={() => handleCategory(cat)}
                 className={`rounded px-4 py-2 text-sm font-semibold transition ${activeCategory === cat ? "bg-primary-700 text-secondary-200" : "border border-secondary-300/30 text-secondary-100 hover:bg-primary-700/10"}`}>
                 {cat}
               </button>
@@ -139,11 +140,12 @@ export default function PublicationsPage() {
         )}
 
         {!isLoading && !isError && filtered.length > 0 && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filtered.map((pub) => (
-              <PublicationCard key={pub.id} pub={pub} />
-            ))}
-          </div>
+          <>
+            <div className={`${paginated.length >= 4 ? 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'flex flex-wrap justify-center gap-6'}`}>
+              {paginated.map((pub, i) => <PublicationCard key={pub.id} pub={pub} index={i} />)}
+            </div>
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          </>
         )}
       </PageSection>
     </>

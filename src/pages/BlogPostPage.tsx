@@ -108,9 +108,11 @@ export default function BlogPostPage() {
               <div className="mx-auto h-1 w-24 bg-secondary-100" />
             </div>
             <div className="grid gap-8 md:grid-cols-3">
-              {relatedPosts.map((relatedPost) => (
+              {relatedPosts.map((relatedPost, i) => (
                 <article
                   key={relatedPost.id}
+                  data-reveal
+                  style={{ transitionDelay: `${i * 100}ms` }}
                   className="group overflow-hidden rounded border border-gray-300 bg-secondary-200 shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
                 >
                   <div className="relative h-48 overflow-hidden">

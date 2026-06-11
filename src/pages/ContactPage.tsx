@@ -107,9 +107,11 @@ export default function ContactPage() {
       {/* Contact Info Cards */}
       <PageSection className="bg-secondary-200">
         <div className="grid gap-8 md:grid-cols-3">
-          {contactInfo.map((info) => (
+          {contactInfo.map((info, i) => (
             <div
               key={info.title}
+              data-reveal
+              style={{ transitionDelay: `${i * 100}ms` }}
               className="bg-style-600/50 rounded border border-gray-400 p-8 text-center shadow-[0_18px_40px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(0,0,0,0.10)]"
             >
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-700 text-secondary-200">
@@ -135,7 +137,7 @@ export default function ContactPage() {
       <PageSection className="bg-style-600/50">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Contact Form */}
-          <div>
+          <div data-reveal="left">
             <div className="mb-8 space-y-4">
               <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">
                 Send Us a Message
@@ -307,7 +309,7 @@ export default function ContactPage() {
           </div>
 
           {/* Map & Additional Info */}
-          <div className="space-y-8">
+          <div data-reveal="right" className="space-y-8">
             {/* Map */}
             <div className="overflow-hidden border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
               <div className="relative h-96">
