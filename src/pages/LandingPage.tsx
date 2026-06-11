@@ -99,7 +99,7 @@ export default function LandingPage() {
   const goPrev = () => setActiveSlide((c) => c === 0 ? activeContentSlides.length - 1 : c - 1);
 
   useEffect(() => {
-    const interval = window.setInterval(goNext, 5000);
+    const interval = window.setInterval(goNext, 10000);
     return () => window.clearInterval(interval);
   }, [activeContentSlides.length]);
 
