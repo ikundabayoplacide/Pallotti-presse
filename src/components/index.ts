@@ -1,5 +1,6 @@
 export { default as AboutUsSection } from "./AboutUsSection";
 export { default as Button } from "./Button";
+export { default as CategorySelect } from "./CategorySelect";
 export { default as Container } from "./Container";
 export { default as DashboardLayout } from "./DashboardLayout";
 export { default as FeatureCard } from "./FeatureCard";

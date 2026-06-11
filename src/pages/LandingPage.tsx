@@ -88,26 +88,19 @@ export default function LandingPage() {
   const { data: heroData, isLoading: heroLoading } = useGetHeroSlidesQuery();
   const allSlides = heroData?.data ?? [];
 
-  // Split by role
   const bgSlide = allSlides.find((s) => s.role === 'background' && s.active);
   const videoSlide = allSlides.find((s) => s.role === 'video' && s.active);
   const contentSlides = allSlides.filter((s) => s.role === 'slide' && s.active);
-  const activeContentSlides = heroLoading ? [] : contentSlides.length > 0 ? contentSlides : staticHeroSlides;
 
+  const activeContentSlides = contentSlides.length > 0 ? contentSlides : staticHeroSlides;
   const bgImage = bgSlide?.image ?? (activeContentSlides[0] as { image?: string })?.image ?? "";
 
-  const goNext = () => setActiveSlide((c) => activeContentSlides.length > 0 ? (c + 1) % activeContentSlides.length : 0);
-  const goPrev = () => setActiveSlide((c) => activeContentSlides.length > 0 ? (c === 0 ? activeContentSlides.length - 1 : c - 1) : 0);
+  const goNext = () => setActiveSlide((c) => (c + 1) % activeContentSlides.length);
+  const goPrev = () => setActiveSlide((c) => c === 0 ? activeContentSlides.length - 1 : c - 1);
 
   useEffect(() => {
-    if (activeContentSlides.length === 0) return;
-    const interval = window.setInterval(goNext, 10000);
+    const interval = window.setInterval(goNext, 5000);
     return () => window.clearInterval(interval);
-  }, [activeContentSlides.length]);
-
-  // Reset slide index when slides change (e.g. after loading)
-  useEffect(() => {
-    setActiveSlide(0);
   }, [activeContentSlides.length]);
 
   // Fetch services for the Popular Services scroll
@@ -137,28 +130,35 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-slate-900/55" />
         </div>
 
-        {heroLoading ? (
-          <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 md:flex-row md:items-start lg:px-10">
-            <div className="w-full animate-pulse rounded-xl bg-white/10 md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }} />
-            <div className="flex flex-col gap-3 md:w-[45%] mt-10">
-              <div className="h-[300px] animate-pulse rounded-xl bg-white/10" />
-            </div>
-          </div>
-        ) : (
-          <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 xxs:px-5 xs:px-6 sm:px-8 md:flex-row md:items-start lg:px-10">
-            {/* Left card — video or bg image */}
-            <div className="w-full overflow-hidden rounded-xl border border-white/20 bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }}>
-              {videoSlide?.video ? (
-                <video src={videoSlide.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
-              ) : bgImage ? (
-                <img src={bgImage} alt="" className="h-full w-full object-cover opacity-75" />
-              ) : null}
-            </div>
+        {/* Two floating cards */}
+        <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 xxs:px-5 xs:px-6 sm:px-8 md:flex-row md:items-start lg:px-10">
 
-            {/* Right card + nav */}
-            <div className="flex flex-col gap-2 md:w-[45%] mt-10">
-              <div className="overflow-hidden rounded-xl bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,0.4)]" style={{ height: "300px" }}>
-                {activeContentSlides.map((slide, index) => (
+          {/* Left card — video or bg image */}
+          <div className="w-full overflow-hidden rounded-xl border border-white/20 bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm md:w-[55%] md:h-[380px]" style={{ minHeight: "260px" }}>
+            {heroLoading ? (
+              <div className="h-full w-full animate-pulse bg-white/10" />
+            ) : videoSlide?.video ? (
+              <video src={videoSlide.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+            ) : bgImage ? (
+              <img src={bgImage} alt="" className="h-full w-full object-cover opacity-75" />
+            ) : null}
+          </div>
+
+          {/* Right card + nav */}
+          <div className="flex flex-col gap-2 md:w-[45%] mt-10">
+            <div className="overflow-hidden rounded-xl bg-black/60 shadow-[0_12px_40px_rgba(0,0,0,0.4)]" style={{ height: "300px" }}>
+              {heroLoading ? (
+                <div className="flex h-full flex-col gap-3 p-5">
+                  <div className="h-7 w-3/4 animate-pulse rounded bg-white/20" />
+                  <div className="h-0.5 w-12 animate-pulse rounded bg-white/20" />
+                  <div className="h-4 w-full animate-pulse rounded bg-white/10" />
+                  <div className="h-4 w-5/6 animate-pulse rounded bg-white/10" />
+                  <div className="h-4 w-4/6 animate-pulse rounded bg-white/10" />
+                  <div className="h-4 w-3/4 animate-pulse rounded bg-white/10" />
+                  <div className="mt-auto h-8 w-24 animate-pulse rounded bg-white/20" />
+                </div>
+              ) : (
+                activeContentSlides.map((slide, index) => (
                   <div
                     key={index}
                     className={`relative h-full flex-col ${ index === activeSlide ? "flex" : "hidden" }`}
@@ -176,16 +176,12 @@ export default function LandingPage() {
                       {slide.description && (
                         <>
                           <div className="my-2 h-0.5 w-12 rounded bg-primary-600" />
-                          <div className="overflow-y-auto no-scrollbar space-y-1 text-sm leading-6 text-gray-100" style={{ maxHeight: '160px' }}>
+                          <div className="overflow-y-auto no-scrollbar space-y-1 text-sm leading-6 text-gray-100 font-bold" style={{ maxHeight: '160px' }}>
                             {slide.description.split('\n').map((line, i) => {
                               const trimmed = line.trim();
                               if (!trimmed) return null;
                               const isBullet = /^(✅|[-*•]|\d+\.)/.test(trimmed);
-                              return isBullet ? (
-                                <div key={i}>{trimmed}</div>
-                              ) : (
-                                <p key={i}>{trimmed}</p>
-                              );
+                              return isBullet ? <div key={i}>{trimmed}</div> : <p key={i}>{trimmed}</p>;
                             })}
                           </div>
                         </>
@@ -199,10 +195,12 @@ export default function LandingPage() {
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                ))
+              )}
+            </div>
 
-              {/* Nav dots & arrows */}
+            {/* Nav dots & arrows */}
+            {!heroLoading && (
               <div className="flex items-center justify-between px-1">
                 <div className="flex items-center gap-2">
                   {activeContentSlides.map((_, index) => (
@@ -222,9 +220,10 @@ export default function LandingPage() {
                   </button>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
+
+        </div>
       </section>
 
       {/* Features bar */}
@@ -353,7 +352,7 @@ export default function LandingPage() {
         >
           <div className="space-y-4 text-center">
             <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">
-              Latest from the Blog
+              Latest from the Posts
             </h2>
             <div className="mx-auto h-1 w-24 bg-secondary-100" />
           </div>

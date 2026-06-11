@@ -1,5 +1,6 @@
 import { useGetServicesQuery } from "../app/api/services";
 import { Button, PageSection } from "../components";
+import processBg from "../assets/im2.jpeg";
 
 const process = [
   { step: "01", title: "Consultation", description: "We discuss your project requirements, materials, quantity, and timeline." },
@@ -90,31 +91,37 @@ export default function ServicesPage() {
       </PageSection>
 
       {/* Process Section */}
-      <PageSection className="bg-secondary-200">
+      <section
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${processBg})` }}
+      >
+        <div className="absolute inset-0 bg-primary-900/75" />
+        <PageSection className="relative z-10 bg-transparent">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-6">
             <div className="space-y-4">
-              <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">Our Process</h2>
-              <div className="h-1 w-24 bg-secondary-100" />
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Our Process</h2>
+              <div className="h-1 w-24 bg-white" />
             </div>
-            <p className="text-base leading-7 text-secondary-100">
+            <p className="text-base leading-7 text-white/80">
               We've streamlined our workflow to deliver exceptional results efficiently.
             </p>
             <Button to="/contact" size="lg" variant="secondary">Start Your Project</Button>
           </div>
           <div className="space-y-6">
             {process.map((item) => (
-              <div key={item.step} className="flex gap-6 border-l-4 border-primary-700 bg-style-600/50 p-6 shadow-[0_12px_30px_rgba(0,0,0,0.04)]">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-primary-700 text-lg font-semibold text-secondary-200">{item.step}</div>
+              <div key={item.step} className="flex gap-6 border-l-4 border-primary-400 bg-white/10 backdrop-blur-sm p-6">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-primary-600 text-lg font-semibold text-white">{item.step}</div>
                 <div>
-                  <h3 className="mb-2 text-xl font-semibold text-secondary-100">{item.title}</h3>
-                  <p className="text-sm leading-7 text-secondary-100">{item.description}</p>
+                  <h3 className="mb-2 text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="text-sm leading-7 text-white/80">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </PageSection>
+        </PageSection>
+      </section>
 
       {/* CTA Section */}
       <PageSection className="bg-primary-800">

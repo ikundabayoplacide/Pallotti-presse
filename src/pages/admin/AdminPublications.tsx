@@ -9,6 +9,7 @@ import {
   type Publication,
 } from "../../app/api/publications";
 import { Button } from "../../components";
+import CategorySelect from "../../components/CategorySelect";
 
 type PubType = "article" | "file";
 
@@ -324,9 +325,13 @@ export default function AdminPublications() {
                     {/* Category */}
                     <div>
                       <label className="mb-2 block text-sm font-semibold text-secondary-100">Category *</label>
-                      <select name="category" value={formData.category} onChange={handleChange} className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none">
-                        {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-                      </select>
+                      <CategorySelect
+                        value={formData.category}
+                        onChange={(val) => setFormData((p) => ({ ...p, category: val }))}
+                        presetOptions={categories}
+                        existingCategories={publications.map((p) => p.category)}
+                        required
+                      />
                     </div>
 
                     {/* Type */}

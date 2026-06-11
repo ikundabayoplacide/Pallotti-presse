@@ -9,6 +9,7 @@ import {
     type BlogPost,
 } from "../../app/api/blog";
 import { Button } from "../../components";
+import CategorySelect from "../../components/CategorySelect";
 
 const categories = ["Design Tips", "Packaging", "Marketing", "Printing Basics", "Sustainability"];
 
@@ -259,9 +260,13 @@ export default function AdminBlog() {
                     </div>
                     <div>
                       <label className="mb-2 block text-sm font-semibold text-secondary-100">Category *</label>
-                      <select name="category" value={formData.category} onChange={handleChange} className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none">
-                        {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-                      </select>
+                      <CategorySelect
+                        value={formData.category}
+                        onChange={(val) => setFormData((p) => ({ ...p, category: val }))}
+                        presetOptions={categories}
+                        existingCategories={blogs.map((b) => b.category)}
+                        required
+                      />
                     </div>
                   </div>
                   <div>
