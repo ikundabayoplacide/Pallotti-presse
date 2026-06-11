@@ -37,7 +37,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
           {pub.featured && <span className="rounded-full bg-primary-700 px-3 py-1 text-xs font-semibold text-secondary-200">Featured</span>}
           {pub.isPremium && (
             <span className="flex items-center gap-1 rounded-full bg-yellow-500 px-3 py-1 text-xs font-semibold text-white">
-              <HiLockClosed className="h-3 w-3" /> {pub.price}
+              <HiLockClosed className="h-3 w-3" /> RWF {pub.price}
             </span>
           )}
         </div>
