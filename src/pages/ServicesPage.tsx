@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { HiStar, HiXMark } from "react-icons/hi2";
+import { HiXMark } from "react-icons/hi2";
 import { useGetServicesQuery } from "../app/api/services";
-import { useGetTestimonialsQuery } from "../app/api/testimonials";
 import { Button, PageSection, Pagination } from "../components";
 import processBg from "../assets/im2.jpeg";
 import Office from "../assets/off.jpg";
+
 
 const DESCRIPTION_LIMIT = 120;
 
@@ -150,7 +150,6 @@ export default function ServicesPage() {
           </div>
         </PageSection>
       </section>
-
 
       <PageSection className="bg-primary-800">
         <div className="bg-primary-600 p-8 text-center sm:p-12">
