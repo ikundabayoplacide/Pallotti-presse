@@ -15,7 +15,7 @@ function getExcerpt(pub: Publication): string {
     return plain.length > 150 ? plain.slice(0, 150) + "…" : plain;
   }
   if (pub.fileName) return `File: ${pub.fileName}`;
-  return "No preview available.";
+  return "";
 }
 
 function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
@@ -45,7 +45,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
       <div className="flex flex-1 flex-col p-5">
         <span className="mb-2 inline-block self-start rounded-full bg-primary-700/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary-700 uppercase">{pub.category}</span>
         <h3 className="mb-2 text-lg font-semibold leading-snug text-secondary-100 line-clamp-2">{pub.title}</h3>
-        <p className="mb-4 flex-1 text-sm leading-6 text-secondary-300 line-clamp-3">{getExcerpt(pub)}</p>
+        {getExcerpt(pub) && <p className="mb-4 flex-1 text-sm leading-6 text-secondary-300 line-clamp-3">{getExcerpt(pub)}</p>}
         <div className="mb-4 flex items-center gap-4 text-xs text-secondary-300">
           <span className="flex items-center gap-1"><HiCalendar className="h-3.5 w-3.5" />{formatDate(pub.createdAt)}</span>
           <span className="flex items-center gap-1"><HiEye className="h-3.5 w-3.5" />{pub.views} views</span>
