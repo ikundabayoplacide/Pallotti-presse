@@ -5,6 +5,7 @@ import AboutPage from "../pages/AboutPage";
 import AdminAbout from "../pages/admin/AdminAbout";
 import AdminBlog from "../pages/admin/AdminBlog";
 import AdminChangePassword from "../pages/admin/AdminChangePassword";
+import AdminDepartments from "../pages/admin/AdminDepartments";
 import AdminFAQs from "../pages/admin/AdminFAQs";
 import AdminGallery from "../pages/admin/AdminGallery";
 import AdminHeroSlides from "../pages/admin/AdminHeroSlides";
@@ -56,6 +57,7 @@ export default function AppRoutes() {
           <Route path="hero-slides" element={<AdminHeroSlides />} />
           <Route path="about" element={<AdminAbout />} />
           <Route path="services" element={<AdminServices />} />
+          <Route path="departments" element={<AdminDepartments />} />
           <Route path="portfolio" element={<AdminPortfolio />} />
           <Route path="blog" element={<AdminBlog />} />
           <Route path="publications" element={<AdminPublications />} />

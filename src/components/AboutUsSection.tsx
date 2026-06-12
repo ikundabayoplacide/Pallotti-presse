@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { HiCheckBadge, HiEye } from "react-icons/hi2";
 import { useGetAboutQuery } from "../app/api/about";
-import buildingImage from "../assets/im3.jpeg";
+import buildingImage from "../assets/bible.jpg";
 
 export default function AboutUsSection() {
   const { data } = useGetAboutQuery();
@@ -35,14 +35,19 @@ export default function AboutUsSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-slate-200 py-16 sm:py-20">
-      <div className="absolute inset-0">
-        <img src={buildingImage} alt="Printing house building" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-sky-700/35 via-slate-900/20 to-slate-950/40" />
-      </div>
+    <section
+      className="relative py-16 sm:py-20"
+      style={{
+        backgroundImage: `url(${buildingImage})`,
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-sky-700/35 via-slate-900/20 to-slate-950/40" />
 
       <div className="relative mx-auto max-w-7xl px-4 xxs:px-5 xs:px-6 sm:px-8 lg:px-10">
-        <div className="flex justify-end">
+        <div className="flex justify-start">
           <div
             ref={cardRef}
             className={`about-card-reveal w-full max-w-2xl rounded-3xl bg-white/95 p-6 shadow-[0_28px_80px_rgba(15,23,42,0.2)] backdrop-blur-sm sm:p-8 ${

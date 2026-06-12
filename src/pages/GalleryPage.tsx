@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { HiXMark } from "react-icons/hi2";
+import { useEffect, useState } from "react";
+import { HiArrowLeft, HiArrowRight, HiXMark } from "react-icons/hi2";
 import { useGetImagesQuery } from "../app/api/gallery";
 import { PageSection, Pagination } from "../components";
 
@@ -9,7 +9,7 @@ export default function GalleryPage() {
   const { data, isLoading, isError } = useGetImagesQuery();
   const images = data?.data ?? [];
   const [activeCategory, setActiveCategory] = useState("All");
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [page, setPage] = useState(1);
 
   const categories = ["All", ...Array.from(new Set(images.map((img) => img.category)))];
@@ -19,6 +19,25 @@ export default function GalleryPage() {
   const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const handleCategory = (cat: string) => { setActiveCategory(cat); setPage(1); };
+
+  const openLightbox = (img: typeof filtered[number]) => {
+    const idx = filtered.findIndex((i) => i.id === img.id);
+    setLightboxIndex(idx);
+  };
+
+  const goPrev = () => setLightboxIndex((i) => (i !== null && i > 0 ? i - 1 : filtered.length - 1));
+  const goNext = () => setLightboxIndex((i) => (i !== null && i < filtered.length - 1 ? i + 1 : 0));
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "Escape") setLightboxIndex(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex]);
 
   return (
     <>
@@ -78,7 +97,7 @@ export default function GalleryPage() {
                   key={img.id}
                   data-reveal
                   style={{ transitionDelay: `${(i % 4) * 80}ms` }}
-                  onClick={() => setLightbox(img.image)}
+                  onClick={() => openLightbox(img)}
                   className="group relative aspect-square cursor-pointer overflow-hidden rounded-lg border border-secondary-300/20 shadow-[0_12px_30px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]"
                 >
                   <img
@@ -106,25 +125,27 @@ export default function GalleryPage() {
         )}
       </PageSection>
 
-      {lightbox && (
-        <>
-          <div className="fixed inset-0 z-50 bg-secondary-100/90 backdrop-blur-sm" onClick={() => setLightbox(null)} />
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <button
-              onClick={() => setLightbox(null)}
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-secondary-200/20 text-secondary-200 transition hover:bg-secondary-200/40"
-            >
-              <HiXMark className="h-6 w-6" />
-            </button>
-            <img
-              src={lightbox}
-              alt="Gallery"
-              className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        </>
-      )}
+      {lightboxIndex !== null && (() => {
+        const img = filtered[lightboxIndex];
+        return (
+          <>
+            <div className="fixed inset-0 z-50 bg-secondary-100/90 backdrop-blur-sm" onClick={() => setLightboxIndex(null)} />
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <button onClick={() => setLightboxIndex(null)} className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-secondary-200/20 text-secondary-200 transition hover:bg-secondary-200/40">
+                <HiXMark className="h-6 w-6" />
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); goPrev(); }} className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-secondary-200/20 text-secondary-200 transition hover:bg-secondary-200/40">
+                <HiArrowLeft className="h-6 w-6" />
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); goNext(); }} className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-secondary-200/20 text-secondary-200 transition hover:bg-secondary-200/40">
+                <HiArrowRight className="h-6 w-6" />
+              </button>
+              <img src={img.image} alt={img.title ?? img.category} className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-[0_30px_60px_rgba(0,0,0,0.5)]" onClick={(e) => e.stopPropagation()} />
+              <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-secondary-200/70">{lightboxIndex + 1} / {filtered.length}</p>
+            </div>
+          </>
+        );
+      })()}
     </>
   );
 }

@@ -90,12 +90,6 @@ export default function NavBar() {
         {/* White center band — language switcher + quote + hamburger */}
         <div className="bg-white w-full flex items-center justify-end gap-2 px-4 py-1.5">
           <LanguageSwitcher variant="dark" />
-          <Link
-            to="/contact"
-            className="hidden sm:inline-flex items-center rounded border border-primary-600 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary-600 transition hover:bg-primary-600 hover:text-white"
-          >
-            {t("nav.quote")}
-          </Link>
           <button
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded border border-primary-600 text-primary-600 transition hover:bg-primary-600 hover:text-white"

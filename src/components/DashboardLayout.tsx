@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiDocumentText, HiEnvelope, HiHome, HiInformationCircle, HiLockClosed, HiOutlinePhoto, HiPhoto, HiQuestionMarkCircle, HiStar, HiUserGroup, HiUsers, HiXMark } from "react-icons/hi2";
+import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiBuildingOffice2, HiDocumentText, HiEnvelope, HiHome, HiInformationCircle, HiLockClosed, HiOutlinePhoto, HiPhoto, HiQuestionMarkCircle, HiStar, HiUserGroup, HiUsers, HiXMark } from "react-icons/hi2";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../app/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -10,6 +10,7 @@ const menuItems = [
   { icon: HiPhoto, label: "Hero Slides", to: "/admin/hero-slides" },
   { icon: HiInformationCircle, label: "About", to: "/admin/about" },
   { icon: HiDocumentText, label: "Services", to: "/admin/services" },
+  { icon: HiBuildingOffice2, label: "Departments", to: "/admin/departments" },
   { icon: HiDocumentText, label: "Portfolio", to: "/admin/portfolio" },
   { icon: HiDocumentText, label: "Blog Posts", to: "/admin/blog" },
   { icon: HiBookOpen, label: "Publications", to: "/admin/publications" },

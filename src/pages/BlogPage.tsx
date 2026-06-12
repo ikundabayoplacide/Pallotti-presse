@@ -59,10 +59,10 @@ export default function BlogPage() {
       </section>
 
       <PageSection id="blog" className="bg-secondary-200" containerClassName="space-y-12">
-        <div className="space-y-4 text-center">
+        {/* <div className="space-y-4 text-center">
           <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">Latest Articles</h2>
           <div className="mx-auto h-1 w-24 bg-secondary-100" />
-        </div>
+        </div> */}
 
         {isLoading && (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

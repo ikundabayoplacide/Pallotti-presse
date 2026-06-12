@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useScrollReveal } from "../app/hooks/useScrollReveal";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
+import ScrollToTopButton from "./ScrollToTopButton";
 import WhatsappButton from "./WhatsappButton";
 
 export default function Layout() {
@@ -14,6 +15,7 @@ export default function Layout() {
       </main>
       <Footer />
       <WhatsappButton phoneNumber="+250788313617" />
+      <ScrollToTopButton />
     </div>
   );
 }

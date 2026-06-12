@@ -6,6 +6,7 @@ type PageSectionProps = {
   className?: string;
   containerClassName?: string;
   id?: string;
+  py?: string;
 };
 
 export default function PageSection({
@@ -13,9 +14,10 @@ export default function PageSection({
   className = "",
   containerClassName = "",
   id,
+  py = "py-16 sm:py-20 lg:py-24",
 }: PageSectionProps) {
   return (
-    <section id={id} className={`py-16 sm:py-20 lg:py-24 ${className}`.trim()}>
+    <section id={id} className={`${py} ${className}`.trim()}>
       <Container className={containerClassName}>{children}</Container>
     </section>
   );

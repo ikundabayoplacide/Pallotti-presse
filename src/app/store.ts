@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { aboutApi } from './api/about';
 import { authApi } from './api/auth';
 import { blogApi } from './api/blog';
+import { departmentsApi } from './api/departments';
 import { faqsApi } from './api/faqs';
 import { galleryApi } from './api/gallery';
 import { heroSlidesApi } from './api/heroSlides';
@@ -24,6 +25,7 @@ export const store = configureStore({
     [servicesApi.reducerPath]: servicesApi.reducer,
     [portfolioApi.reducerPath]: portfolioApi.reducer,
     [blogApi.reducerPath]: blogApi.reducer,
+    [departmentsApi.reducerPath]: departmentsApi.reducer,
     [messagesApi.reducerPath]: messagesApi.reducer,
     [partnersApi.reducerPath]: partnersApi.reducer,
     [testimonialsApi.reducerPath]: testimonialsApi.reducer,
@@ -41,6 +43,7 @@ export const store = configureStore({
       servicesApi.middleware,
       portfolioApi.middleware,
       blogApi.middleware,
+      departmentsApi.middleware,
       messagesApi.middleware,
       partnersApi.middleware,
       testimonialsApi.middleware,

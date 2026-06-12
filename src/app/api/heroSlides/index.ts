@@ -40,7 +40,11 @@ export const heroSlidesApi = createApi({
     getHeroSlides: builder.query<ApiResponse<HeroSlide[]>, void>({
       query: () => '/hero-slides',
       providesTags: ['HeroSlide'],
-      keepUnusedDataFor: 300,
+      keepUnusedDataFor: 600,
+      transformResponse: (response: ApiResponse<HeroSlide[]>) => {
+        try { localStorage.setItem('heroSlides_cache', JSON.stringify(response)); } catch {}
+        return response;
+      },
     }),
     getAllHeroSlides: builder.query<ApiResponse<HeroSlide[]>, void>({
       query: () => '/hero-slides/all',

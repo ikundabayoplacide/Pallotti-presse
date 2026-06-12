@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { HiStar, HiXMark } from "react-icons/hi2";
 import { useGetServicesQuery } from "../app/api/services";
+import { useGetTestimonialsQuery } from "../app/api/testimonials";
 import { Button, PageSection, Pagination } from "../components";
 import processBg from "../assets/im2.jpeg";
+import Office from "../assets/off.jpg";
+
+const DESCRIPTION_LIMIT = 120;
 
 const processList = [
   { step: "01", title: "Consultation", description: "We discuss your project requirements, materials, quantity, and timeline." },
@@ -16,6 +21,7 @@ export default function ServicesPage() {
   const { data, isLoading, isError } = useGetServicesQuery();
   const services = data?.data ?? [];
   const [page, setPage] = useState(1);
+  const [activeService, setActiveService] = useState<{ name: string; description: string; image: string } | null>(null);
 
   const totalPages = Math.ceil(services.length / PER_PAGE);
   const paginated = services.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -36,10 +42,10 @@ export default function ServicesPage() {
       </section>
 
       <PageSection id="services" className="bg-secondary-200" containerClassName="space-y-12 py-2">
-        <div className="space-y-4 text-center">
+        {/* <div className="space-y-4 text-center">
           <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">Our Services</h2>
           <div className="mx-auto h-1 w-24 bg-secondary-100" />
-        </div>
+        </div> */}
 
         {isLoading && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -63,7 +69,14 @@ export default function ServicesPage() {
                   </div>
                   <div className="p-8">
                     <h3 className="mb-3 text-2xl font-semibold text-secondary-100">{service.name}</h3>
-                    <p className="text-sm leading-7 text-secondary-100">{service.description}</p>
+                    <p className="text-sm leading-7 text-secondary-100 line-clamp-3">
+                      {service.description.length > DESCRIPTION_LIMIT
+                        ? service.description.slice(0, DESCRIPTION_LIMIT) + "…"
+                        : service.description}
+                    </p>
+                    {service.description.length > DESCRIPTION_LIMIT && (
+                      <button onClick={() => setActiveService(service)} className="mt-2 text-sm font-semibold text-primary-700 hover:underline">Read more →</button>
+                    )}
                     {service.price && <p className="mt-3 text-sm font-semibold text-primary-700">{service.price}</p>}
                   </div>
                 </div>
@@ -73,6 +86,26 @@ export default function ServicesPage() {
           </>
         )}
       </PageSection>
+
+      {activeService && (
+        <>
+          <div className="fixed inset-0 z-50 bg-secondary-100/70 backdrop-blur-sm" onClick={() => setActiveService(null)} />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="relative w-full max-w-2xl rounded-lg bg-secondary-200 shadow-[0_24px_50px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+              <div className="h-52 overflow-hidden rounded-t-lg shrink-0">
+                <img src={activeService.image} alt={activeService.name} className="h-full w-full object-cover" />
+              </div>
+              <button onClick={() => setActiveService(null)} className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-secondary-100/60 text-secondary-200 hover:bg-secondary-100/80">
+                <HiXMark className="h-5 w-5" />
+              </button>
+              <div className="p-6 overflow-y-auto">
+                <p className="text-sm tracking-[0.18em] text-primary-700 uppercase font-semibold">{activeService.name}</p>
+                <p className="mt-4 text-sm leading-7 text-secondary-100 whitespace-pre-line">{activeService.description}</p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       <PageSection className="bg-style-600/50" containerClassName="grid gap-8 lg:grid-cols-3">
         {[
@@ -98,6 +131,9 @@ export default function ServicesPage() {
                 <div className="h-1 w-24 bg-white" />
               </div>
               <p className="text-base leading-7 text-white/80">We've streamlined our workflow to deliver exceptional results efficiently.</p>
+              <div className="mt-6 overflow-hidden rounded shadow-[0_18px_40px_rgba(255,255,255,0.1)] h-120">
+                <img src={Office} alt="" className="h-full w-full object-cover" />
+              </div>
               <Button to="/contact" size="lg" variant="secondary">Start Your Project</Button>
             </div>
             <div className="space-y-6">
@@ -114,6 +150,7 @@ export default function ServicesPage() {
           </div>
         </PageSection>
       </section>
+
 
       <PageSection className="bg-primary-800">
         <div className="bg-primary-600 p-8 text-center sm:p-12">

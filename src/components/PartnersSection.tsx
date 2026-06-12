@@ -43,8 +43,8 @@ export default function PartnersSection() {
 
   if (isLoading) {
     return (
-      <PageSection className="bg-secondary-200" containerClassName="space-y-12">
-        <div className="space-y-4 text-center">
+      <PageSection className="bg-secondary-200" containerClassName="space-y-2">
+        <div className=" text-center">
           <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">
             Trusted by Leading Brands
           </h2>
@@ -62,7 +62,7 @@ export default function PartnersSection() {
   if (partners.length === 0) return null;
 
   return (
-    <PageSection className="bg-secondary-200" containerClassName="space-y-12">
+    <PageSection className="bg-secondary-200" py="py-10" containerClassName="space-y-8">
       <div className="space-y-4 text-center">
         <h2 className="text-3xl font-semibold text-secondary-100 sm:text-4xl">
           Trusted by Leading Brands
