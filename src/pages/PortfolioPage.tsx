@@ -1,13 +1,14 @@
 import { useState } from "react";
+import type { PortfolioItem } from "../app/api/portfolio";
 import { useGetPortfolioItemsQuery } from "../app/api/portfolio";
 import { Button, PageSection, Pagination } from "../components";
 
-const categories = ["All", "Business Printing", "Packaging", "Marketing", "Publications"];
 const PER_PAGE = 9;
 
 export default function PortfolioPage() {
   const { data, isLoading, isError } = useGetPortfolioItemsQuery();
   const allItems = data?.data ?? [];
+  const categories = ["All", ...Array.from(new Set(allItems.map((item) => item.category)))];
   const [activeCategory, setActiveCategory] = useState("All");
   const [page, setPage] = useState(1);
 
@@ -16,6 +17,7 @@ export default function PortfolioPage() {
   const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const handleCategory = (cat: string) => { setActiveCategory(cat); setPage(1); };
+  const [selected, setSelected] = useState<PortfolioItem | null>(null);
 
   return (
     <>
@@ -84,7 +86,12 @@ export default function PortfolioPage() {
                   <div className="p-6">
                     <p className="text-xs tracking-[0.16em] uppercase text-primary-700">{item.category}</p>
                     <h3 className="mt-2 text-xl font-semibold text-secondary-100">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-secondary-100">{item.description}</p>
+                    <p className="mt-3 text-sm leading-7 text-secondary-100 line-clamp-3">{item.description}</p>
+                    {item.description.length > 120 && (
+                      <button onClick={() => setSelected(item)} className="mt-2 text-xs font-semibold text-primary-700 hover:underline">
+                        Read More
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -93,6 +100,22 @@ export default function PortfolioPage() {
           </>
         )}
       </PageSection>
+
+      {selected && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setSelected(null)}>
+          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded bg-secondary-200 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <img src={selected.image} alt={selected.title} className="h-72 w-full object-cover" />
+            <div className="p-8">
+              <p className="text-xs tracking-[0.16em] uppercase text-primary-700">{selected.category}</p>
+              <h3 className="mt-2 text-2xl font-semibold text-secondary-100">{selected.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-secondary-100">{selected.description}</p>
+            </div>
+            <button onClick={() => setSelected(null)} className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       <PageSection className="bg-secondary-200">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">

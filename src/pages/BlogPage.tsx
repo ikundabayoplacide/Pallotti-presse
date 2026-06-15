@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useGetBlogsQuery } from "../app/api/blog";
 import { Button, PageSection, Pagination } from "../components";
 
-const categories = ["All Posts", "Design Tips", "Packaging", "Marketing", "Printing Basics", "Sustainability"];
 const PER_PAGE = 9;
 
 export default function BlogPage() {
   const { data, isLoading, isError } = useGetBlogsQuery();
   const allPosts = data?.data ?? [];
+  const categories = ["All Posts", ...Array.from(new Set(allPosts.map((p) => p.category)))];
   const [activeCategory, setActiveCategory] = useState("All Posts");
   const [page, setPage] = useState(1);
 
