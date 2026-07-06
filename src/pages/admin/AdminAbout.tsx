@@ -24,7 +24,9 @@ export default function AdminAbout() {
       setAboutDescription(a.aboutDescription);
       setVision(a.vision);
       setMission(a.mission);
-      setValues(a.values ?? []);
+      const raw = a.values;
+      const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+      setValues(Array.isArray(parsed) ? parsed : []);
     }
   }, [data]);
 

@@ -30,70 +30,157 @@ function PaywallModal({ pub, onClose }: { pub: { id: string; title: string; pric
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-secondary-100/70 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="fixed inset-0 z-50 bg-secondary-100/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div className="fixed inset-0 z-50 overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
-          <div className="relative w-full max-w-md rounded-lg bg-secondary-200 shadow-[0_24px_50px_rgba(0,0,0,0.3)]" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative w-full max-w-2xl rounded-lg bg-secondary-200 shadow-[0_24px_50px_rgba(0,0,0,0.3)]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between border-b border-secondary-300/30 p-6">
               <div className="flex items-center gap-2">
                 <HiLockClosed className="h-5 w-5 text-primary-700" />
-                <h2 className="text-lg font-semibold text-secondary-100">Premium Publication</h2>
+                <h2 className="text-lg font-semibold text-secondary-100">
+                  Premium Publication
+                </h2>
               </div>
-              <button onClick={onClose} className="text-secondary-300 hover:text-secondary-100">
+              <button
+                onClick={onClose}
+                className="text-secondary-300 hover:text-secondary-100"
+              >
                 <HiXMark className="h-6 w-6" />
               </button>
             </div>
-            <div className="p-6 space-y-4">
+            <div className="overflow-y-auto max-h-[70vh] p-6 space-y-4">
               {submitted ? (
                 <div className="text-center space-y-3 py-4">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
-                    <svg className="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-7 w-7 text-green-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
-                  <p className="text-base font-semibold text-secondary-100">Request Submitted!</p>
-                  <p className="text-sm text-secondary-300">
-                    We've received your payment request. Once verified, you'll receive an access link at{" "}
-                    <span className="font-semibold text-secondary-100">{email}</span>.
+                  <p className="text-base font-semibold text-secondary-100">
+                    Request Submitted!
                   </p>
-                  <Button onClick={onClose} variant="secondary" className="rounded mt-2">Close</Button>
+                  <p className="text-sm text-secondary-300">
+                    We've received your payment request. Once verified, you'll
+                    receive an access link at{" "}
+                    <span className="font-semibold text-secondary-100">
+                      {email}
+                    </span>
+                    .
+                  </p>
+                  <Button
+                    onClick={onClose}
+                    variant="secondary"
+                    className="rounded mt-2"
+                  >
+                    Close
+                  </Button>
                 </div>
               ) : (
                 <>
                   <p className="text-sm text-secondary-300 leading-6">
-                    <span className="font-semibold text-secondary-100">{pub.title}</span> requires a one-time payment to access the full content.
+                    <span className="font-semibold text-secondary-100">
+                      {pub.title}
+                    </span>{" "}
+                    requires a one-time payment to access the full content.
                   </p>
                   <div className="rounded-lg border border-primary-700/30 bg-primary-700/5 p-4 space-y-2">
-                    <p className="text-sm font-semibold text-secondary-100">How to Pay (MoMo)</p>
+                    <p className="text-sm font-semibold text-secondary-100">
+                      How to Pay
+                    </p>
                     <ol className="text-sm text-secondary-300 space-y-1 list-decimal list-inside">
-                      <li>Send <span className="font-semibold text-secondary-100">{pub.price}</span> to MoMo number: <span className="font-semibold text-secondary-100">{pub.momoNumber}</span></li>
+                      <li>
+                        Send{" "}
+                        <span className="font-semibold text-secondary-100">
+                          {pub.price}
+                        </span>{" "}
+                        to MoMo number:{" "}
+                        <span className="font-semibold text-secondary-100">
+                          {pub.momoNumber}
+                        </span>
+                      </li>
                       <li>Use your email as the payment note</li>
-                      <li>Copy the transaction ID from your MoMo confirmation</li>
+                      <li>
+                        Copy the transaction ID from Your message confirmation
+                      </li>
                       <li>Fill in the form below and submit</li>
+                      <li>
+                        Pay also on Bank:{" "}
+                        <span className="font-semibold text-secondary-100">
+                          100070294097
+                        </span>{" "}
+                        at Bank of Kigali
+                      </li>
+                      <li>you are going to pay to: Pallotti Presse ltd</li>
+                      <li>
+                        You will receive an email with the access link after
+                        payment those email will be used everytime you want to
+                        ready this publication
+                      </li>
+                      <li>
+                        if dont get link on your email Contact us on{"+250788313617/+250 788 304 549"}
+                      </li>
                     </ol>
                   </div>
                   <form onSubmit={handleSubmit} className="space-y-3">
                     <div>
-                      <label className="mb-1 block text-sm font-semibold text-secondary-100">Your Email *</label>
+                      <label className="mb-1 block text-sm font-semibold text-secondary-100">
+                        Your Email *
+                      </label>
                       <input
-                        type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                         className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none"
                         placeholder="you@example.com"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-sm font-semibold text-secondary-100">MoMo Transaction ID *</label>
+                      <label className="mb-1 block text-sm font-semibold text-secondary-100">
+                        Transaction ID *
+                      </label>
                       <input
-                        type="text" value={transactionId} onChange={(e) => setTransactionId(e.target.value)} required
+                        type="text"
+                        value={transactionId}
+                        onChange={(e) => setTransactionId(e.target.value)}
+                        required
                         className="w-full rounded border border-secondary-300/30 bg-secondary-200 px-4 py-3 text-sm text-secondary-100 focus:border-primary-700 focus:outline-none"
                         placeholder="e.g. TXN123456789"
                       />
                     </div>
                     <div className="flex gap-3 pt-1">
-                      <Button type="submit" variant="secondary" className="flex-1 rounded" disabled={isLoading}>
+                      <Button
+                        type="submit"
+                        variant="secondary"
+                        className="flex-1 rounded"
+                        disabled={isLoading}
+                      >
                         {isLoading ? "Submitting..." : "Submit Payment Request"}
                       </Button>
-                      <Button type="button" variant="ghost" onClick={onClose} className="rounded">Cancel</Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={onClose}
+                        className="rounded"
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   </form>
                 </>

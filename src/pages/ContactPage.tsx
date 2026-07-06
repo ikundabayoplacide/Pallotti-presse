@@ -9,19 +9,19 @@ const contactInfo = [
   {
     icon: HiPhone,
     title: "Phone",
-    details: ["+250 788 313 617", "+250 123 456 789"],
+    details: ["+250 788 313 617", "+250 788 304 549"],
     description: "Mon-Fri from 8am to 5pm",
   },
   {
     icon: HiEnvelope,
     title: "Email",
-    details: ["info@pallottipresse.com", "support@pallottipresse.com"],
+    details: ["info@pallottipresse.com", " pallottipresse@yahoo.com"],
     description: "We'll respond within 24 hours",
   },
   {
     icon: HiMapPin,
     title: "Office",
-    details: ["Kigali, Rwanda", "KG 123 St, Kimironko"],
+    details: ["Kigali, Rwanda", "KK 621 St, Kicukiro-Gikondo"],
     description: "Visit us during business hours",
   },
 ];
@@ -314,7 +314,7 @@ export default function ContactPage() {
             <div className="overflow-hidden border border-secondary-300/15 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
               <div className="relative h-96">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.84238336778!2d30.058570!3d-1.9440727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xe9b7e68a6a8b5bb!2sKigali%2C%20Rwanda!5e0!3m2!1sen!2sus!4v1234567890"
+                  src="https://maps.google.com/maps?q=KK+621+St,+Kicukiro,+Kigali,+Rwanda&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}

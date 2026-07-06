@@ -46,8 +46,10 @@ export default function AboutPage() {
   const testimonials = testimonialsData?.data ?? [];
 
   const heroTitle = about?.heroTitle ?? "Built to deliver clean, confident print for modern brands.";
-  const heroDescription = about?.heroDescription ?? "Pallotti Press supports businesses, events, and creators with professional printing services that balance visual quality, fast turnaround, and dependable production.";
-  const values = about?.values?.length ? about.values : defaultValues;
+  const heroDescription = about?.heroDescription ?? "Pallotti Presse supports businesses, events, and creators with professional printing services that balance visual quality, fast turnaround, and dependable production.";
+  const rawValues = about?.values;
+  const parsedValues = typeof rawValues === "string" ? JSON.parse(rawValues) : rawValues;
+  const values = Array.isArray(parsedValues) && parsedValues.length ? parsedValues : defaultValues;
 
   return (
     <>

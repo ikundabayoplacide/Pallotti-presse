@@ -102,17 +102,43 @@ export default function PortfolioPage() {
       </PageSection>
 
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setSelected(null)}>
-          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded bg-secondary-200 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <img src={selected.image} alt={selected.title} className="h-72 w-full object-cover" />
-            <div className="p-8">
-              <p className="text-xs tracking-[0.16em] uppercase text-primary-700">{selected.category}</p>
-              <h3 className="mt-2 text-2xl font-semibold text-secondary-100">{selected.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-secondary-100">{selected.description}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 sm:p-8" onClick={() => setSelected(null)}>
+          <div className="relative w-full max-w-5xl rounded-xl overflow-hidden shadow-2xl flex flex-col md:flex-row" style={{ height: '98vh' }} onClick={(e) => e.stopPropagation()}>
+            {/* Left — full image */}
+            <div className="md:w-1/2 overflow-hidden">
+              <img src={selected.image} alt={selected.title} className="h-full w-full object-cover" />
             </div>
-            <button onClick={() => setSelected(null)} className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70">
-              ✕
-            </button>
+            {/* Right — details */}
+            <div className="md:w-1/2 flex flex-col bg-secondary-200">
+              <div className="flex items-start justify-between border-b border-secondary-300/20 px-6 py-5">
+                <div>
+                  <span className="inline-block rounded-full bg-primary-700 px-3 py-1 text-xs font-semibold tracking-widest uppercase text-secondary-200">{selected.category}</span>
+                  <h3 className="mt-3 text-xl font-semibold text-secondary-100 sm:text-2xl">{selected.title}</h3>
+                </div>
+                <button onClick={() => setSelected(null)} className="ml-4 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary-300/20 text-secondary-100 hover:bg-secondary-300/40">
+                  ✕
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+                <p className="text-sm leading-7 text-secondary-100">{selected.description}</p>
+                {(selected.client || selected.completedDate) && (
+                  <div className="flex flex-wrap gap-6 border-t border-secondary-300/20 pt-4">
+                    {selected.client && (
+                      <div>
+                        <p className="text-xs tracking-[0.14em] uppercase text-secondary-300">Client</p>
+                        <p className="mt-1 text-sm font-semibold text-secondary-100">{selected.client}</p>
+                      </div>
+                    )}
+                    {selected.completedDate && (
+                      <div>
+                        <p className="text-xs tracking-[0.14em] uppercase text-secondary-300">Completed</p>
+                        <p className="mt-1 text-sm font-semibold text-secondary-100">{new Date(selected.completedDate).toLocaleDateString("en-US", { year: "numeric", month: "long" })}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -122,7 +148,7 @@ export default function PortfolioPage() {
           {[
             { value: "500+", label: "Projects Completed" },
             { value: "300+", label: "Happy Clients" },
-            { value: "15+", label: "Years Experience" },
+            { value: "40+", label: "Years Experience" },
             { value: "24h", label: "Fast Turnaround" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
