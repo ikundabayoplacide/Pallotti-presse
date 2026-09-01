@@ -146,10 +146,10 @@ export default function PortfolioPage() {
       <PageSection className="bg-secondary-200">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { value: "500+", label: "Projects Completed" },
-            { value: "300+", label: "Happy Clients" },
-            { value: "40+", label: "Years Experience" },
-            { value: "24h", label: "Fast Turnaround" },
+            { value: "50M+", label: "Projects Completed" },
+            { value: "12M+", label: "Happy Clients" },
+            { value: "41+", label: "Years Experience" },
+            { value: "12h/5days", label: "Fast Turnaround" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-5xl font-bold text-primary-700">{stat.value}</div>

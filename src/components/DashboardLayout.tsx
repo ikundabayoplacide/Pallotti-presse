@@ -3,7 +3,7 @@ import { HiArrowRightOnRectangle, HiBars3, HiBookOpen, HiBuildingOffice2, HiDocu
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../app/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import Logo from "../assets/pplogo.png";
+import Logo from "../assets/plogo.png";
 
 const menuItems = [
   { icon: HiHome, label: "Dashboard", to: "/admin/dashboard" },

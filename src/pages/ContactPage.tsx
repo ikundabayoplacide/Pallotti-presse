@@ -9,7 +9,7 @@ const contactInfo = [
   {
     icon: HiPhone,
     title: "Phone",
-    details: ["+250 788 313 617", "+250 788 304 549"],
+    details: ["+250 788 313 617", "+250 788 304 549"," +250 788 319 152"],
     description: "Mon-Fri from 8am to 5pm",
   },
   {
