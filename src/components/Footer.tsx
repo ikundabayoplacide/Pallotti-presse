@@ -124,7 +124,7 @@ export default function Footer() {
         <p>
           © {currentYear} Pallotti Presse. All rights reserved || Powered by{" "}
           <a
-            href="https://santechinnovate.com/"
+            href="https://www.santechconnect.com/"
             className="hover:text-primary-700 text-primary-900 font-bold"
           >
             SAN TECH

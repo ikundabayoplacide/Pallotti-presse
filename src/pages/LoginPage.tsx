@@ -10,7 +10,7 @@ import {
 import { setCredentials } from "../app/features/auth/authSlice";
 import { useAppDispatch } from "../app/hooks";
 import HeroImage from "../assets/login.png";
-import Logo from "../assets/pplogo.png";
+import Logo from "../assets/plogo.png";
 
 type View = "login" | "forgot" | "reset";
 
